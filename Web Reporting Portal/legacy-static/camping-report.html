@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camping Report - SU Eleme</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="js/auth-check.js"></script>
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm"><img src="assets/logo.png" alt="SU" style="width:30px;"></div>
+                <span>Eleme Area</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#">Home</a></li>
+                <li class="nav-label">Core Ministry Reports</li>
+                <li class="nav-item"><a href="schools-youth.html">Schools & Youth Report</a></li>
+                <li class="nav-item"><a href="children-report.html">Children Report</a></li>
+                <li class="nav-item"><a href="pilgrims-report.html">Pilgrims' Report</a></li>
+                <li class="nav-item active"><a href="camping-report.html">Camping Report</a></li>
+                
+				<li class="nav-label">Operational</li>
+				<li class="nav-item"><a href="missionary-report.html">Missionary Report</a></li>
+				<li class="nav-item"><a href="#">Zonal Report</a></li>
+				<li class="nav-item"><a href="#">Tour Report</a></li>
+                <li class="nav-item"><a href="#">Trainings & Meetings</a></li>
+				<li class="nav-item"><a href="#">Termly Report</a></li>
+                <li class="nav-item"><a href="#">Reading Note Distribution</a></li>
+                
+                <li class="nav-label">System</li>
+				<li class="nav-item"><a href="#">User's Profile</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <header class="top-bar">
+                <div class="breadcrumb">Dashboard / <strong>Camping Report</strong></div>
+                <div class="user-profile">
+                    <span><strong>God-First</strong></span>
+                    <div class="profile-circle">GF</div>
+                </div>
+            </header>
+
+            <div class="content-padding">
+                <div class="section-header">
+                    <h2>Area Camping Portfolio</h2>
+                    <p>Centralized view of all residential camps and conferences across Eleme Area.</p>
+                </div>
+
+                <div class="upload-notice-box" style="margin-bottom: 30px; background-color: #e3f2fd; border-left-color: #2196f3;">
+                    <p><strong>System Note:</strong> Camping reports are integrated with their respective departments. Clicking "Go to Form" will route you to the departmental reporting unit to ensure data consistency.</p>
+                </div>
+
+                <div class="subsidiary-grid">
+                    
+                    <div class="subsidiary-card">
+                        <div class="card-icon">⛺</div>
+                        <h4>Student Leadership Training Camp</h4>
+                        <p class="dept-tag">Department: <strong>Student & Youth</strong></p>
+                        <p>Focus: Executive training and spiritual development for school leaders.</p>
+                        <a href="schools-youth.html" class="btn-sm-green">Go to Student Dept Form</a>
+                    </div>
+
+                    <div class="subsidiary-card">
+                        <div class="card-icon">🕊️</div>
+                        <h4>Easter Pilgrims' Conference</h4>
+                        <p class="dept-tag">Department: <strong>Pilgrims</strong></p>
+                        <p>Focus: Annual spiritual retreat for adult members and families.</p>
+                        <a href="form-access-control.html?report=pilgrims-report" class="btn-sm-green">Go to Pilgrims Dept Form</a>
+                    </div>
+
+                    <div class="subsidiary-card">
+                        <div class="card-icon">🔥</div>
+                        <h4>Student Long Vacation Camp</h4>
+                        <p class="dept-tag">Department: <strong>Student & Youth</strong></p>
+                        <p>Focus: Major annual outreach and discipleship for secondary students.</p>
+                        <a href="schools-youth.html" class="btn-sm-green">Go to Student Dept Form</a>
+                    </div>
+
+                    <div class="subsidiary-card">
+                        <div class="card-icon">🎨</div>
+                        <h4>Children's Long Vacation Camp</h4>
+                        <p class="dept-tag">Department: <strong>Children</strong></p>
+                        <p>Focus: Foundational spiritual training for primary-aged children.</p>
+                        <a href="children-report.html" class="btn-sm-green">Go to Children Dept Form</a>
+                    </div>
+
+                    <div class="subsidiary-card highlight-card">
+                        <div class="card-icon">🚀</div>
+                        <h4>Youth Empowerment Summit Camp</h4>
+                        <p class="dept-tag">Department: <strong>Student & Youth</strong></p>
+                        <p>Focus: Skills acquisition, empowerment, and leadership for youth.</p>
+                        <a href="schools-youth.html" class="btn-sm-green">Go to Student Dept Form</a>
+                    </div>
+
+                </div>
+
+                <div class="data-table-container" style="margin-top: 40px;">
+                    <h3>Camping Statistics Overview (Current Year)</h3>
+                    <table class="classic-table">
+                        <thead>
+                            <tr>
+                                <th>Camp Name</th>
+                                <th>Attendance</th>
+                                <th>Decisions</th>
+                                <th>Finance Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Easter Pilgrims' Conf.</td>
+                                <td>350</td>
+                                <td>15</td>
+                                <td><span class="badge badge-green">Balanced</span></td>
+                            </tr>
+                            <tr>
+                                <td>SLVC (Student Camp)</td>
+                                <td>--</td>
+                                <td>--</td>
+                                <td><span class="badge badge-yellow">Awaiting</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

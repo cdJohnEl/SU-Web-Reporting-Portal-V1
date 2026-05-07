@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification - SU Eleme</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="js/auth.js"></script>
+</head>
+<body class="bg-pattern">
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo-placeholder"><img src="assets/logo.png" alt="SU Logo" class="logo-img"></div>
+            <h1>Two-Step Verification</h1>
+            <p>A 6-digit code has been sent to your registered phone number.</p>
+        </div>
+
+        <div class="login-card otp-card">
+            <h2>Enter OTP</h2>
+            <p class="subtitle">Type the code below to verify your identity.</p>
+            
+            <form id="otpForm">
+                <div class="otp-input-group">
+                    <input type="text" maxlength="1" class="otp-box" required>
+                    <input type="text" maxlength="1" class="otp-box" required>
+                    <input type="text" maxlength="1" class="otp-box" required>
+                    <input type="text" maxlength="1" class="otp-box" required>
+                    <input type="text" maxlength="1" class="otp-box" required>
+                    <input type="text" maxlength="1" class="otp-box" required>
+                </div>
+
+                <button type="submit" class="btn-login" id="verifyBtn">Verify & Proceed</button>
+            </form>
+
+            <div class="resend-section">
+                <p>Didn't receive the code?</p>
+                <a href="#" class="resend-link">Resend OTP</a>
+            </div>
+        </div>
+        
+        <div class="login-footer">
+            <a href="login.html" class="back-link">← Back to Login</a>
+        </div>
+    </div>
+</body>
+</html>

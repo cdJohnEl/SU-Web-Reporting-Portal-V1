@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Verification - SU Eleme</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="js/auth-check.js"></script>
+    <script type="module" src="js/access-control.js"></script>
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm">SU</div>
+                <span>Eleme Area</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active"><a href="dashboard.html">Home</a></li>
+                </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <div class="content-padding flex-center">
+                
+                <div class="verification-card">
+                    <div class="lock-icon">🔒</div>
+                    <h2>Permission Check</h2>
+                    <p class="verification-text">Verifying access rights for: <br>
+                        <strong>Prayer and Gift Day Form</strong>
+                    </p>
+
+                    <div class="user-permissions-box">
+                        <div class="perm-row">
+                            <span>Your Role:</span>
+                            <span class="val" id="userRoleDisplay">...</span>
+                        </div>
+                        <div class="perm-row">
+                            <span>Assigned Zone:</span>
+                            <span class="val" id="userZoneDisplay">...</span>
+                        </div>
+                    </div>
+
+                    <div class="access-notice">
+                        <p>Based on your role, you are authorized to <strong>Edit & Submit</strong> data for <strong>Gokana Zone</strong> only.</p>
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="admin-selector" style="display: none;">
+                            <label>Select Zone to View/Edit:</label>
+                            <select class="dash-select">
+                                <option>Nchia</option>
+                                <option>Gokana</option>
+                                <option>...</option>
+                            </select>
+                        </div>
+
+<div class="security-challenge-box">
+    <div class="challenge-header">
+        <span class="shield-icon">🛡️</span>
+        <h4>Security Challenge</h4>
+    </div>
+    
+    <div class="form-group">
+        <label style="text-align: left; display: block;">Security Question:</label>
+        <p class="display-question" id="displayQuestion">Loading question...</p>
+    </div>
+
+    <div class="form-group">
+        <input type="password" placeholder="Enter your secret answer" class="dash-input" id="securityAnswer">
+        <p class="hint-text"><strong>Hint:</strong> <span id="securityHintDisplay">...</span></p>
+    </div>
+
+    <div class="form-actions">
+        <button class="btn-text w-full" id="verifyAccessBtn">Verify & Access Form</button>
+        <a href="dashboard.html" class="btn-text block text-center mt-10">Cancel and Return</a>
+    </div>
+</div>
+
+
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

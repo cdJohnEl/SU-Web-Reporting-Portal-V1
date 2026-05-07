@@ -1,0 +1,13 @@
+Functions and Backend Tasks
+
+1. All pages made responsive: As it stands, there is no mobile view is not
+2. Registration details should be submitted, collected and saved at the backend
+3. User name should be generated automatically
+4. Activate OTP generation through the phone number registered with
+5. Use of SU logo where necessary
+6. All "Open Form" button should first lead to the 'form-access-control' page for verification.
+7. Names and office at the 'form-access-control' page should correspond with what the user registered with. 
+8. The search on the dashboard should work.
+9. Missionary's report progress should be saved at the backend and entries should be updated anytime the user login, 
+such that he can continue from where he stopped, and submit form button should eventually submit the report for that month.
+10. There should be a review page where users can crosscheck what they have filled in before final submission.

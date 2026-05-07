@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missionary Monthly Report - SU Eleme</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="js/auth-check.js"></script>
+    <script type="module" src="js/reports.js"></script>
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm"><img src="assets/logo.png" alt="SU" style="width:30px;"></div>
+                <span>Eleme Area</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="dashboard.html">Home</a></li>
+                <li class="nav-label">Core Ministry Reports</li>
+                <li class="nav-item"><a href="schools-youth.html">Schools & Youth Report</a></li>
+                <li class="nav-item"><a href="children-report.html">Children Report</a></li>
+                <li class="nav-item"><a href="pilgrims-report.html">Pilgrims' Report</a></li>
+                <li class="nav-item"><a href="camping-report.html">Camping Report</a></li>
+                
+				<li class="nav-label">Operational</li>
+				<li class="nav-item active"><a href="missionary-report.html">Missionary Report</a></li>
+				<li class="nav-item"><a href="#">Zonal Report</a></li>
+				<li class="nav-item"><a href="#">Tour Report</a></li>
+                <li class="nav-item"><a href="#">Trainings & Meetings</a></li>
+				<li class="nav-item"><a href="#">Termly Report</a></li>
+                <li class="nav-item"><a href="#">Reading Note Distribution</a></li>
+                
+                <li class="nav-label">System</li>
+				<li class="nav-item"><a href="#">User's Profile</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <header class="top-bar">
+                <div class="breadcrumb">Staff Office / <strong>Monthly Missionary Report</strong></div>
+                <div class="user-profile">
+                    <span><strong>Kenny Mercy</strong></span>
+                    <div class="profile-circle">KM</div>
+                </div>
+            </header>
+
+            <div class="content-padding">
+                <div class="report-container">
+                    <div class="section-header">
+                        <h2>Missionary's Monthly Report</h2>
+						<p>Scripture Union (Nigeria) Port Harcourt Region, Eleme Area:</p>
+                        <div class="report-meta">
+                            <div class="form-group inline">
+                                <label>Month/Year:</label>
+                                <input type="month" value="2026-04">
+                            </div>
+                            <div class="form-group inline">
+                                <label>Zone:</label>
+                                <select class="dash-select-sm">
+                                    <option>Nchia</option>
+                                    <option>Gokana</option>
+                                    <option>Bori</option>
+									<option>Andoni</option>
+                                    <option>Etche</option>
+                                    <option>Afam</option>
+									<option>Odido/Tai</option>
+                                    <option>Omuma</option>
+                                    <option>Oyigbo</option>
+                                    </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section-card">
+                        <h3 class="section-title">A. Statistics of Schools</h3>
+                        <div class="table-responsive">
+                            <table class="report-table" id="table-a">
+                                <thead>
+                                    <tr>
+                                        <th>School Name</th>
+                                        <th>Male</th>
+                                        <th>Female</th>
+                                        <th>Total</th>
+                                        <th>Day/Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="table-input" placeholder="School name"></td>
+                                        <td><input type="number" class="table-input-sm"></td>
+                                        <td><input type="number" class="table-input-sm"></td>
+                                        <td><input type="number" class="table-input-sm" readonly></td>
+                                        <td><input type="text" class="table-input"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button class="btn-add-row">+ Add School</button>
+                        </div>
+                    </div>
+
+                    <div class="form-section-card">
+                        <h3 class="section-title">B. Daily Visitation Log</h3>
+                        <p class="section-hint">Log your activities for each visit during the month.</p>
+                        <table class="report-table" id="table-b">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>School Visited</th>
+                                    <th>Purpose/Activity</th>
+                                    <th>Attendance</th>
+                                    <th>Amount Spent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="date" class="table-input"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="number" class="table-input-sm"></td>
+                                    <td><input type="number" class="table-input-sm"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn-add-row">+ Add Daily Entry</button>
+                    </div>
+
+					<div class="form-section-card">
+                        <h3 class="section-title">C. Neighbourhood Bible Club & Youth Life Skill Club</h3>
+                        <table class="report-table" id="table-c">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Location</th>
+                                    <th>Activity/Purpose</th>
+                                    <th>Attendance</th>
+                                    <th>Achievement</th>
+                                    <th>Amount Spent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="date" class="table-input"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="number" class="table-input-sm"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="number" class="table-input-sm"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn-add-row" onclick="addRow('table-c')">+ Add Club Entry</button>
+                    </div>
+
+                    <div class="form-section-card">
+                        <h3 class="section-title">D. Secondary School Visitation Weekly Analysis</h3>
+                        <table class="report-table" id="table-d">
+                            <thead>
+                                <tr>
+                                    <th>School Name</th>
+                                    <th>Wk 1</th>
+                                    <th>Wk 2</th>
+                                    <th>Wk 3</th>
+                                    <th>Wk 4</th>
+                                    <th>Wk 5</th>
+                                    <th>Total Visits</th>
+                                    <th>Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="number" class="table-input-sm" readonly></td>
+                                    <td><input type="text" class="table-input"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn-add-row" onclick="addRow('table-d')">+ Add School Analysis</button>
+                    </div>
+
+                    <div class="form-section-card">
+                        <h3 class="section-title">E. Primary School Visitation Weekly Analysis</h3>
+                        <table class="report-table" id="table-e">
+                            <thead>
+                                <tr>
+                                    <th>School Name</th>
+                                    <th>Wk 1</th>
+                                    <th>Wk 2</th>
+                                    <th>Wk 3</th>
+                                    <th>Wk 4</th>
+                                    <th>Wk 5</th>
+                                    <th>Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn-add-row" onclick="addRow('table-e')">+ Add Primary School Analysis</button>
+                    </div>
+                    <div class="form-section-card bg-light-green">
+                        <h3 class="section-title">F. Monthly Summary Analysis</h3>
+                        <div class="stats-input-grid">
+                            <div class="form-group">
+                                <label>Total Secondary Schools</label>
+                                <input type="number" class="dash-input">
+                            </div>
+                            <div class="form-group">
+                                <label>Total Primary Schools</label>
+                                <input type="number" class="dash-input">
+                            </div>
+                            <div class="form-group">
+                                <label>Total School Visits</label>
+                                <input type="number" class="dash-input">
+                            </div>
+							                            <div class="form-group">
+                                <label>Total School Visitor</label>
+                                <input type="number" class="dash-input">
+                            </div>
+							                            <div class="form-group">
+                                <label>Total Schools with Morning Devotion</label>
+                                <input type="number" class="dash-input">
+                            </div>
+							                            <div class="form-group">
+                                <label>Total Schools with BIble Club/Fellowship</label>
+                                <input type="number" class="dash-input">
+                            </div>
+							                            <div class="form-group">
+                                <label>Total Number of Schools</label>
+                                <input type="number" class="dash-input">
+                            </div>
+							                            <div class="form-group">
+                                <label>Total School Visits</label>
+                                <input type="number" class="dash-input">
+                            </div>
+							                            <div class="form-group">
+                                <label>Total School Visits</label>
+                                <input type="number" class="dash-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section-card">
+                        <h3 class="section-title">G. Major School/Youth Programmes Held</h3>
+                        <table class="report-table" id="table-g">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Title of Programme</th>
+                                    <th>Venue</th>
+                                    <th>Amount Spent</th>
+                                    <th>Pilgrims</th>
+                                    <th>Students</th>
+                                    <th>Teachers</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="date" class="table-input"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="number" class="table-input-sm"></td>
+                                    <td><input type="number" class="table-input-sm"></td>
+                                    <td><input type="number" class="table-input-sm"></td>
+                                    <td><input type="number" class="table-input-sm"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn-add-row" onclick="addRow('table-g')">+ Add Programme</button>
+                    </div>
+
+                    <div class="form-section-card">
+                        <h3 class="section-title">H. New School Groups Opened</h3>
+                        <table class="report-table" id="table-i">
+                            <thead>
+                                <tr>
+                                    <th>Name of School</th>
+                                    <th>Location</th>
+                                    <th>Contact Person</th>
+                                    <th>Phone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="tel" class="table-input"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn-add-row" onclick="addRow('table-i')">+ Add New Group</button>
+						    <div class="form-group">
+                                <label>Total New School Groups Opened</label>
+                                <input type="number" class="dash-input">
+                            </div>
+                    </div>
+
+
+                    <div class="form-section-card">
+                        <h3 class="section-title">I. Publications & Feedback</h3>
+                        <div class="flex-row gap-20">
+                            <div class="flex-1">
+                                <label><strong>Ministry Publications Sold:</strong></label>
+                                <div class="pub-list">
+                                    <div class="pub-item"><span>Daily Guide:</span> <input type="number"></div>
+                                    <div class="pub-item"><span>Daily Power:</span> <input type="number"></div>
+                                    <div class="pub-item"><span>Search:</span> <input type="number"></div>
+                                </div>
+                            </div>
+                            <div class="flex-2">
+                                <div class="form-group">
+                                    <label>J. Major Challenges</label>
+                                    <textarea class="dash-textarea" placeholder="List the challenges encountered during the month..."rows="4"></textarea>
+									</div>
+								<div class="form-group">
+                                    <label>K. Recommendation</label>
+                                    <textarea class="dash-textarea" placeholder="Your recommendations for improvement..." rows="4"></textarea>
+									</div>
+                                <div class="form-group">
+                                    <label>L. Prayer Requests</label>
+                                    <textarea class="dash-textarea" placeholder="Ministry and personal prayer points..." rows="4"></textarea>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions-sticky">
+                        <button class="btn-text" id="saveDraftBtn">Save Draft Progress</button>
+                        <button class="btn-text" id="submitReportBtn">Submit Official Monthly Report</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<script>
+    // Function to add a row to the Statistics of Schools Table
+    document.querySelector('.btn-add-row').addEventListener('click', function(e) {
+        // Find the table body specifically for the Statistics section
+        const tableBody = e.target.previousElementSibling.querySelector('tbody');
+        
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td><input type="text" class="table-input" placeholder="School name"></td>
+            <td><input type="number" class="table-input-sm"></td>
+            <td><input type="number" class="table-input-sm"></td>
+            <td><input type="number" class="table-input-sm" readonly></td>
+            <td><input type="text" class="table-input"></td>
+        `;
+        tableBody.appendChild(newRow);
+    });
+
+    // Function to add a row to the Daily Visitation Log Table
+    // Note: We use querySelectorAll because there are multiple "Add Row" buttons
+    const addButtons = document.querySelectorAll('.btn-add-row');
+    addButtons.forEach(button => {
+        button.onclick = function() {
+            const table = this.parentElement.querySelector('table tbody');
+            const row = table.insertRow();
+            
+            // This detects which section we are in to add the correct number of columns
+            const colCount = table.closest('table').querySelectorAll('thead th').length;
+            
+            for (let i = 0; i < colCount; i++) {
+                const cell = row.insertCell(i);
+                // Assign appropriate input types based on common missionary report needs
+                if (i === 0) {
+                    cell.innerHTML = '<input type="date" class="table-input">';
+                } else if (i === 3 || i === 4) {
+                    cell.innerHTML = '<input type="number" class="table-input-sm">';
+                } else {
+                    cell.innerHTML = '<input type="text" class="table-input">';
+                }
+            }
+        };
+    });
+</script>
+</body>
+</html>

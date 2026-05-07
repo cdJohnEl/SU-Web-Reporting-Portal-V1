@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Children Report - SU Eleme</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="js/auth-check.js"></script>
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm"><img src="assets/logo.png" alt="SU" style="width:30px;"></div>
+                <span>Eleme Area</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="dashboard.html">Home</a></li>
+                <li class="nav-label">Core Ministry Reports</li>
+                <li class="nav-item"><a href="schools-youth.html">Schools & Youth Report</a></li>
+                <li class="nav-item active"><a href="children-report.html">Children Report</a></li>
+                <li class="nav-item"><a href="pilgrims-report.html">Pilgrims' Report</a></li>
+                <li class="nav-item"><a href="camping-report.html">Camping Report</a></li>
+                
+                <li class="nav-label">Operational</li>
+				<li class="nav-item"><a href="missionary-report.html">Missionary Report</a></li>
+				<li class="nav-item"><a href="#">Zonal Report</a></li>
+				<li class="nav-item"><a href="#">Tour Report</a></li>
+                <li class="nav-item"><a href="#">Trainings & Meetings</a></li>
+				<li class="nav-item"><a href="#">Termly Report</a></li>
+                <li class="nav-item"><a href="#">Reading Note Distribution</a></li>
+				
+                <li class="nav-label">System</li>
+				<li class="nav-item"><a href="#">User's Profile</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <header class="top-bar">
+                <div class="breadcrumb">Dashboard / <strong>Children Report</strong></div>
+                <div class="user-profile">
+                    <span><strong>Richard</strong></span>
+                    <div class="profile-circle">RH</div>
+                </div>
+            </header>
+
+            <div class="content-padding">
+                <div class="section-header">
+                    <h2>Children Department</h2>
+                    <p>Capturing the growth and spiritual impact of children's activities in Eleme Area. </p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card mini green-border">
+                        <h3>Bible Clubs</h3>
+                        <div class="stat-value-sm">42</div>
+                    </div>
+                    <div class="stat-card mini gold-border">
+                        <h3>Decisions for Christ</h3>
+                        <div class="stat-value-sm">312</div>
+                    </div>
+                    <div class="stat-card mini blue-border">
+                        <h3>Avg. Attendance</h3>
+                        <div class="stat-value-sm">1,250</div>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Children's Ministry Subsidiaries</h3>
+                <div class="subsidiary-grid">
+                    
+                    <div class="subsidiary-card">
+                        <div class="card-icon">🏫</div>
+                        <h4>Primary School Visitation</h4>
+                        <p>Metrics for visitation to primary schools across the zones[cite: 26].</p>
+                        <button class="btn-sm-outline" onclick="window.location.href='form-access-control.html?report=primary-visitation'">Open Form</button>
+                    </div>
+
+                    <div class="subsidiary-card">
+                        <div class="card-icon">🎈</div>
+                        <h4>Children Rally</h4>
+                        <p>Zonal rallies focusing on outreach and children fellowship.</p>
+                        <button class="btn-sm-outline">Open Form</button>
+                    </div>
+
+                    <div class="subsidiary-card">
+                        <div class="card-icon">⛺</div>
+                        <h4>Children Long Vacation Camp</h4>
+                        <p>Detailed report on the annual holiday camp for children[cite: 26].</p>
+                        <button class="btn-sm-outline">Open Form</button>
+                    </div>
+
+                    <div class="subsidiary-card">
+                        <div class="card-icon">🎉</div>
+                        <h4>Children's Day</h4>
+                        <p>Reporting on the May 27th national celebration activities.</p>
+                        <button class="btn-sm-outline">Open Form</button>
+                    </div>
+
+                    <div class="subsidiary-card">
+                        <div class="card-icon">🎄</div>
+                        <h4>Children Christmas Party</h4>
+                        <p>End-of-year evangelical outreach and festive activities.</p>
+                        <button class="btn-sm-outline">Open Form</button>
+                    </div>
+
+                    <div class="subsidiary-card highlight-card">
+                        <div class="card-icon">📖</div>
+                        <h4>Neighbourhood Bible Club</h4>
+                        <p>Tracking the growth of community-based bible study groups.</p>
+                        <button class="btn-sm-green">Log Weekly Progress</button>
+                    </div>
+
+                    <div class="subsidiary-card">
+                        <div class="card-icon">📣</div>
+                        <h4>Children Week of Emphasis</h4>
+                        <p>Special week-long programs across the area zones.</p>
+                        <button class="btn-sm-outline">Open Form</button>
+                    </div>
+
+                </div>
+
+                <div class="dashboard-row" style="margin-top: 30px;">
+                    <div class="data-table-container">
+                        <h3>Recent Bible Club Additions</h3>
+                        <table class="classic-table">
+                            <thead>
+                                <tr>
+                                    <th>Zone</th>
+                                    <th>Location</th>
+                                    <th>Coordinator</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Nchia</td>
+                                    <td>Ebubu Community</td>
+                                    <td>Sis. Mercy</td>
+                                    <td><span class="badge badge-green">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Oyigbo</td>
+                                    <td>Railway Area</td>
+                                    <td>Bro. David</td>
+                                    <td><span class="badge badge-yellow">New</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="action-panel">
+                        <h3>Departmental Oversight</h3>
+                        <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">
+                            This section is used for <strong>General Statistics</strong> and internal oversight of the Children's department.
+                        </p>
+                        <button class="action-btn">Download Area Summary</button>
+                        <button class="action-btn outline">View Yearly Trends</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

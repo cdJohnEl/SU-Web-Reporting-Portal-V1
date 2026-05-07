@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SU Eleme</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="js/auth-check.js"></script>
+    <script type="module" src="js/admin.js"></script>
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm"><img src="assets/logo.png" alt="SU" style="width:30px;"></div>
+                <span>Admin Panel</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item active"><a href="admin-dashboard.html">User Approvals</a></li>
+                <li class="nav-item"><a href="dashboard.html">Client View</a></li>
+                <li class="nav-label">System</li>
+				<li class="nav-item"><a href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <header class="top-bar">
+                <div class="breadcrumb">Admin / <strong>User Management</strong></div>
+                <div class="user-profile">
+                    <span id="adminName"><strong>Admin</strong></span>
+                    <div class="profile-circle" id="adminInitials">AD</div>
+                </div>
+            </header>
+
+            <div class="content-padding">
+                <div class="section-header">
+                    <h2>Pending User Approvals</h2>
+                    <p>Review and approve access requests for the reporting portal.</p>
+                </div>
+
+                <div class="data-table-container">
+                    <table class="classic-table" id="pendingUsersTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Zone</th>
+                                <th>Role</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pendingUsersBody">
+                            <!-- Dynamic rows -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="section-header" style="margin-top: 40px;">
+                    <h2>Approved Users</h2>
+                </div>
+                <div class="data-table-container">
+                    <table class="classic-table" id="approvedUsersTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Zone</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="approvedUsersBody">
+                            <!-- Dynamic rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
