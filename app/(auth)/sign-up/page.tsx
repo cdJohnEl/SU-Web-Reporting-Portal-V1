@@ -7,6 +7,8 @@ import { auth, db } from "@/lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
+import Image from "next/image";
+
 export default function SignUpPage() {
   const router = useRouter();
   const [error, setError] = useState("");
@@ -85,9 +87,13 @@ export default function SignUpPage() {
       
       <div className="text-center mb-8 z-10 w-full max-w-md">
         <div className="flex justify-center mb-4">
-          <div className="w-16 h-16 bg-[#1b5e20] text-white font-bold rounded-lg flex items-center justify-center text-2xl shadow-sm">
-            SU
-          </div>
+          <Image 
+            src="/scripture_union_logo.png" 
+            alt="SU Logo" 
+            width={80} 
+            height={80} 
+            className="rounded-lg shadow-sm"
+          />
         </div>
         <h1 className="text-2xl md:text-3xl font-bold text-[#1b5e20]">Request Access</h1>
         <p className="text-gray-600 mt-1 text-sm md:text-base">Scripture Union Eleme Area Reporting System</p>
