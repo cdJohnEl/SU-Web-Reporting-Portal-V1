@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { User, LogOut, Search } from "lucide-react";
+import { User, LogOut, Search, Menu } from "lucide-react";
+import Image from "next/image";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
@@ -16,8 +17,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export function TopBar() {
-  const [userName, setUserName] = useState<string>("Amenya");
-  const [initials, setInitials] = useState<string>("AM");
+  const [userName, setUserName] = useState<string>("User");
+  const [initials, setInitials] = useState<string>("U");
   const router = useRouter();
 
   useEffect(() => {
@@ -28,7 +29,8 @@ export function TopBar() {
         // Try getting full name from Firestore
         const userDoc = await getDoc(doc(db, "users", user.uid));
         if (userDoc.exists()) {
-          const fullName = userDoc.data().fullName;
+          const userData = userDoc.data();
+          const fullName = userData.fullName || userData.name;
           if (fullName) {
             setUserName(fullName);
             const initials = fullName
@@ -46,12 +48,26 @@ export function TopBar() {
   }, []);
 
   const handleLogout = async () => {
-    await signOut(auth);
-    router.push("/login");
+    try {
+      await signOut(auth);
+      router.push("/login");
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
   };
 
   return (
     <header className="h-16 border-b bg-white flex flex-row items-center justify-between px-6 shadow-sm z-10 w-full relative">
+      <div className="flex items-center gap-4 md:hidden mr-4">
+        <Image 
+          src="/scripture_union_logo.png" 
+          alt="SU Logo" 
+          width={32} 
+          height={32} 
+          className="rounded-sm"
+        />
+      </div>
+      
       <div className="flex-1 max-w-lg">
         <div className="relative flex items-center w-full h-10 rounded-md border border-gray-300 bg-white px-3 overflow-hidden focus-within:ring-2 focus-within:ring-[#1b5e20] focus-within:border-transparent transition-all">
           <Search className="h-4 w-4 text-gray-400 mr-2" />

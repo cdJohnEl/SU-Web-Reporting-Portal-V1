@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
+import Image from "next/image";
 import { 
   LayoutDashboard, 
   Users, 
@@ -35,10 +36,13 @@ export function Sidebar() {
   return (
     <aside className="w-64 bg-sidebar border-r border-sidebar-border hidden md:flex flex-col min-h-screen">
       <div className="p-6 flex items-center gap-3">
-        {/* Placeholder for SU Logo */}
-        <div className="w-8 h-8 bg-primary text-primary-foreground font-bold rounded-md flex items-center justify-center">
-          SU
-        </div>
+        <Image 
+          src="/scripture_union_logo.png" 
+          alt="SU Logo" 
+          width={40} 
+          height={40} 
+          className="rounded-md shadow-sm"
+        />
         <span className="font-semibold text-lg text-sidebar-foreground">Eleme Area</span>
       </div>
 
@@ -79,8 +83,11 @@ export function Sidebar() {
             <Link href="/missionary-report" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-sidebar-accent text-sidebar-foreground hover:text-sidebar-accent-foreground">
               <Activity className="w-4 h-4" /> Missionary Report
             </Link>
-            <Link href="#" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md border-l-2 border-transparent hover:bg-sidebar-accent text-sidebar-foreground hover:text-sidebar-accent-foreground hover:border-[#1b5e20]/30 transition-all opacity-80">
+            <Link href="/initialize-report?type=zonal" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md border-l-2 border-transparent hover:bg-sidebar-accent text-sidebar-foreground hover:text-sidebar-accent-foreground hover:border-[#1b5e20]/30 transition-all">
               <Folder className="w-4 h-4" /> Zonal Report
+            </Link>
+            <Link href="/initialize-report?type=schools-termly" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md border-l-2 border-transparent hover:bg-sidebar-accent text-sidebar-foreground hover:text-sidebar-accent-foreground hover:border-[#1b5e20]/30 transition-all">
+              <Folder className="w-4 h-4" /> Termly Report
             </Link>
             <Link href="#" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md border-l-2 border-transparent hover:bg-sidebar-accent text-sidebar-foreground hover:text-sidebar-accent-foreground hover:border-[#1b5e20]/30 transition-all opacity-80">
               <Folder className="w-4 h-4" /> Tour Report
