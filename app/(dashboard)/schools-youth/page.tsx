@@ -1,12 +1,26 @@
 "use client";
 
-import { GraduationCap, Tent, Megaphone, Zap, Paperclip } from "lucide-react";
+import { useEffect, useState } from "react";
+import { GraduationCap, Tent, Megaphone, Zap, Paperclip, Loader2 } from "lucide-react";
+import { fetchDeptStats } from "@/lib/stats";
 
 export default function SchoolsYouthPage() {
+  const [statsData, setStatsData] = useState({ count: 0, impact: 0 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      const data = await fetchDeptStats("Missionary Report");
+      setStatsData(data);
+      setLoading(false);
+    };
+    load();
+  }, []);
+
   const stats = [
-    { label: "Total Schools", value: "84", color: "border-[#1b5e20]" },
-    { label: "Active Fellowships", value: "62", color: "border-[#ffca28]" },
-    { label: "Teachers Reached", value: "215", color: "border-blue-500" },
+    { label: "Schools Reached", value: statsData.count, color: "border-[#1b5e20]" },
+    { label: "Fellowship Impact", value: statsData.impact, color: "border-[#ffca28]" },
+    { label: "Zonal Coverage", value: "85%", color: "border-blue-500" },
   ];
 
   const subsidiaries = [
@@ -57,9 +71,13 @@ export default function SchoolsYouthPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {stats.map((stat, i) => (
-          <div key={i} className={`bg-white p-6 rounded-lg shadow-sm border-l-4 ${stat.color}`}>
+          <div key={i} className={`bg-white p-6 rounded-lg shadow-sm border-l-4 ${stat.color} transition-all hover:shadow-md`}>
             <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider">{stat.label}</h3>
-            <div className="text-3xl font-extrabold text-gray-900 mt-2">{stat.value}</div>
+            {loading ? (
+              <Loader2 className="animate-spin text-gray-300 mt-2" size={20} />
+            ) : (
+              <div className="text-3xl font-extrabold text-gray-900 mt-2">{stat.value}</div>
+            )}
           </div>
         ))}
       </div>

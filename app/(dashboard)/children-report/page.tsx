@@ -1,12 +1,26 @@
 "use client";
 
-import { School, Baby, Tent, PartyPopper, Gift, BookOpen, Megaphone } from "lucide-react";
+import { useEffect, useState } from "react";
+import { School, Baby, Tent, PartyPopper, Gift, BookOpen, Megaphone, Loader2 } from "lucide-react";
+import { fetchDeptStats } from "@/lib/stats";
 
 export default function ChildrenReportPage() {
+  const [statsData, setStatsData] = useState({ count: 0, impact: 0 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      const data = await fetchDeptStats("Children Report"); // Placeholder report type
+      setStatsData(data);
+      setLoading(false);
+    };
+    load();
+  }, []);
+
   const stats = [
-    { label: "Bible Clubs", value: "42", color: "border-[#1b5e20]" },
-    { label: "Decisions for Christ", value: "312", color: "border-[#ffca28]" },
-    { label: "Avg. Attendance", value: "1,250", color: "border-blue-500" },
+    { label: "Bible Clubs", value: statsData.count, color: "border-[#1b5e20]" },
+    { label: "Total Impact", value: statsData.impact.toLocaleString(), color: "border-[#ffca28]" },
+    { label: "Zonal Presence", value: "12 Zones", color: "border-blue-500" },
   ];
 
   const subsidiaries = [
@@ -55,11 +69,6 @@ export default function ChildrenReportPage() {
     },
   ];
 
-  const recentClubs = [
-    { zone: "Nchia", location: "Ebubu Community", coordinator: "Sis. Mercy", status: "Active" },
-    { zone: "Oyigbo", location: "Railway Area", coordinator: "Bro. David", status: "New" },
-  ];
-
   return (
     <div className="space-y-8">
       <div className="mb-6">
@@ -69,9 +78,13 @@ export default function ChildrenReportPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {stats.map((stat, i) => (
-          <div key={i} className={`bg-white p-6 rounded-lg shadow-sm border-l-4 ${stat.color}`}>
+          <div key={i} className={`bg-white p-6 rounded-lg shadow-sm border-l-4 ${stat.color} transition-all hover:shadow-md`}>
             <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider">{stat.label}</h3>
-            <div className="text-3xl font-extrabold text-gray-900 mt-2">{stat.value}</div>
+            {loading ? (
+              <Loader2 className="animate-spin text-gray-300 mt-2" size={20} />
+            ) : (
+              <div className="text-3xl font-extrabold text-gray-900 mt-2">{stat.value}</div>
+            )}
           </div>
         ))}
       </div>
@@ -91,51 +104,6 @@ export default function ChildrenReportPage() {
               </button>
             </div>
           ))}
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-          <h3 className="text-lg font-bold text-gray-800 mb-4">Recent Bible Club Additions</h3>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="pb-3 font-bold text-gray-500 text-sm uppercase tracking-wider">Zone</th>
-                  <th className="pb-3 font-bold text-gray-500 text-sm uppercase tracking-wider">Location</th>
-                  <th className="pb-3 font-bold text-gray-500 text-sm uppercase tracking-wider">Coordinator</th>
-                  <th className="pb-3 font-bold text-gray-500 text-sm uppercase tracking-wider">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-50">
-                {recentClubs.map((club, i) => (
-                  <tr key={i}>
-                    <td className="py-4 text-sm font-medium text-gray-900">{club.zone}</td>
-                    <td className="py-4 text-sm text-gray-600">{club.location}</td>
-                    <td className="py-4 text-sm text-gray-600">{club.coordinator}</td>
-                    <td className="py-4 text-sm">
-                      <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter ${club.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                        {club.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-          <h3 className="text-lg font-bold text-gray-800 mb-2">Departmental Oversight</h3>
-          <p className="text-xs text-gray-500 mb-6">This section is used for General Statistics and internal oversight of the Children's department.</p>
-          <div className="space-y-3">
-            <button className="w-full py-2.5 bg-[#1b5e20] text-white font-bold rounded-md hover:bg-[#2e7d32] transition-colors text-sm shadow-sm">
-              Download Area Summary
-            </button>
-            <button className="w-full py-2.5 border-2 border-[#1b5e20] text-[#1b5e20] font-bold rounded-md hover:bg-gray-50 transition-colors text-sm">
-              View Yearly Trends
-            </button>
-          </div>
         </div>
       </div>
     </div>

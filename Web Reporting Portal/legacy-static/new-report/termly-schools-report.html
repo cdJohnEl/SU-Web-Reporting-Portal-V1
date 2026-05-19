@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schools Termly Report - SU Eleme</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm">SU</div>
+                <span>Eleme Area</span>
+            </div>
+			
+            <ul class="nav-menu">
+                <li class="nav-item active"><a href="dashboard.html">Home</a></li>
+                <li class="nav-label">Core Ministry Reports</li>
+                <li class="nav-item"><a href="schools-youth.html">Schools & Youth Report</a></li>
+                <li class="nav-item"><a href="children-report.html">Children Report</a></li>
+                <li class="nav-item"><a href="pilgrims-report.html">Pilgrims' Report</a></li>
+                <li class="nav-item"><a href="camping-report.html">Camping Report</a></li>
+                
+				<li class="nav-label">Operational</li>
+				<li class="nav-item"><a href="missionary-report.html">Missionary Report</a></li>
+				<li class="nav-item"><a href="zonal-report.html">Zonal Report</a></li>
+				<li class="nav-item"><a href="#">Tour Report</a></li>
+                <li class="nav-item"><a href="#">Trainings & Meetings</a></li>
+				<li class="nav-item"><a href="termly-schools-report.html">Termly Report</a></li>
+                <li class="nav-item"><a href="#">Reading Note Distribution</a></li>
+                
+                <li class="nav-label">System</li>
+				<li class="nav-item"><a href="#">User's Profile</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <header class="top-bar">
+                <div class="breadcrumb">Reporting / <strong>Zonal Termly Report: Schools Dept</strong></div>
+                <div class="user-profile">
+                    <span><strong>Zonal Schools Coordinator</strong></span>
+                    <div class="profile-circle">ZC</div>
+                </div>
+            </header>
+
+            <div class="content-padding">
+                <div class="report-container">
+                    <div class="section-header">
+                        <h2>Zonal Termly Report: Schools Department</h2>
+                        <div class="grid-3 mt-15">
+                            <div class="form-group"><label>Zone</label><input type="text" class="dash-input"></div>
+                            <div class="form-group"><label>Period Covered</label><input type="text" class="dash-input" placeholder="e.g. Jan-April 2026"></div>
+                            <div class="form-group"><label>Date of Report</label><input type="date" class="dash-input"></div>
+                        </div>
+                    </div>
+
+                    <div class="tabs-container">
+                        <button class="tab-link active" onclick="openTab(event, 'general')">General Stats</button>
+                        <button class="tab-link" onclick="openTab(event, 'trainings')">Trainings</button>
+                        <button class="tab-link" onclick="openTab(event, 'programmes')">Programmes</button>
+                        <button class="tab-link" onclick="openTab(event, 'camps')">Holiday Camps</button>
+                        <button class="tab-link" onclick="openTab(event, 'final')">Final Sections</button>
+                    </div>
+
+                    <form>
+                        <div id="general" class="tab-content active">
+                            <div class="form-section-card no-border-gold">
+                                <h3 class="section-title">I. Preamble & II. General Statistics</h3>
+                                <div class="form-group">
+                                    <label>Preamble</label>
+                                    <textarea class="dash-textarea" rows="3" placeholder="Brief overview of the term..."></textarea>
+                                </div>
+                                <div class="grid-2 mt-15">
+                                    <div class="stat-box">
+                                        <label>No. of Missionaries</label><input type="number">
+                                        <label>Schools within Catchment (Pri)</label><input type="number">
+                                        <label>Schools within Catchment (Sec)</label><input type="number">
+                                        <label>Total Group Membership</label><input type="number">
+                                        <label>Total No. of Groups (Pri/Sec)</label><input type="number">
+										<label>No. of School Group Leaders</label><input type="number">
+                                    </div>
+                                    <div class="stat-box">
+                                        <label>No. of School Visitors</label><input type="number">
+                                        <label>No. of Schools Visited</label><input type="number">
+                                        <label>New Groups Opened</label><input type="number">
+                                        <label>No. of Daily Power Distributed</label><input type="number">
+										<label>No. of SBSO Distributed</label><input type="number">
+                                        <label>No. of Search Magazine Distributed</label><input type="text">
+                                        <label>Christian Literature Distributed</label><input type="text">
+                                    </div>
+                                </div>
+                                <div class="stats-divider">Follow Up Details</div>
+                                <div class="grid-3">
+                                    <div class="form-group"><label>Follow-Up Manuals Sold</label><input type="number"></div>
+                                    <div class="form-group"><label>Converts in Follow-Up</label><input type="number"></div>
+                                    <div class="form-group"><label>Completed Follow-Up</label><input type="number"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="trainings" class="tab-content">
+                            <div class="form-section-card">
+                                <h3 class="section-title">III. Student Leaders Training</h3>
+                                <div class="grid-3">
+                                    <div class="form-group"><label>Period Held</label><input type="text"></div>
+                                    <div class="form-group"><label>No. of Schools</label><input type="number"></div>
+                                    <div class="form-group"><label>Attendance</label><input type="number"></div>
+                                    <div class="form-group"><label>New Leaders Trained</label><input type="number"></div>
+                                    <div class="form-group"><label>Pilgrims/Volunteers</label><input type="number"></div>
+                                    <div class="form-group"><label>Total Cost (₦)</label><input type="number"></div>
+                                </div>
+                            </div>
+                            <div class="form-section-card">
+                                <h3 class="section-title">Additional Training Modules</h3>
+                                <div class="training-grid">
+                                    <div class="mini-form">
+                                        <h4>Christian Teacher's Seminar</h4>
+                                        <label>Attendance:</label><input type="number">
+                                        <label>No. of Schools:</label><input type="number">
+										<label>Cost:</label><input type="number">
+                                    </div>
+                                    <div class="mini-form">
+                                        <h4>School Visitors Training</h4>
+                                        <label>School Visitors Trained:</label><input type="number">
+                                        <label>No.of New Volunteers:</label><input type="number">
+										<label>Cost:</label><input type="number">
+                                    </div>
+                                    <div class="mini-form">
+                                        <h4>Camp Officers Training</h4>
+                                        <label>Total Trained:</label><input type="number">
+                                        <label>No of Trainings held:</label><input type="number">
+										<label>Cost:</label><input type="number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-section-card">
+                                <h3 class="section-title">Vocational Training</h3>
+                                <div class="grid-3">
+                                    <div class="form-group"><label>No. of Training held</label><input type="number"></div>
+                                    <div class="form-group"><label>Attendance</label><input type="number"></div>
+                                    <div class="form-group"><label>Completed Training</label><input type="number"></div>
+                                    <div class="form-group"><label>Cost</label><input type="number"></div>
+								</div>
+							</div>
+                        </div>
+
+                        <div id="programmes" class="tab-content">
+                            <div class="form-section-card">
+                                <h3 class="section-title">IV. Programmes Held</h3>
+                                <table class="report-table">
+                                    <thead>
+                                        <tr><th>Programme</th><th>No. of Units</th><th>No. of Schools</th><th>No. of Volunteers</th><th>Attendance</th><th>Converts</th><th>Cost</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>Schools Rally</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td></tr>
+                                        <tr><td>Primary Rally</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td></tr>
+                                        <tr><td>School Leavers' Workshop</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><input type="number"><td><input type="number"></td><td><input type="number"></td></td></tr>
+                                        <tr><td>Valentine's Day</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="camps" class="tab-content">
+                            <div class="form-section-card">
+                                <h3 class="section-title">Students Holiday Camp</h3>
+                                <div class="grid-4">
+                                    <div class="form-group"><label>Total Students</label><input type="number"></div>
+                                    <div class="form-group"><label>Junior Students</label><input type="number"></div>
+                                    <div class="form-group"><label>Senior Students</label><input type="number"></div>
+                                    <div class="form-group"><label>School Leavers</label><input type="number"></div>
+                                    <div class="form-group"><label>Pilgrims</label><input type="number"></div>
+                                    <div class="form-group"><label>SUCF</label><input type="number"></div>
+                                    <div class="form-group"><label>Christian Teachers</label><input type="number"></div>
+                                    <div class="form-group"><label>Corpers/Volunteers</label><input type="number"></div>
+                                    <div class="form-group"><label>Converts</label><input type="number"></div>
+                                    <div class="form-group"><label>Income</label><input type="number"></div>
+                                    <div class="form-group"><label>Expenditure</label><input type="number"></div>
+                                </div>
+                            </div>
+                            <div class="form-section-card">
+                                <h3 class="section-title">Children Holiday Camp</h3>
+                                <div class="grid-3">
+                                    <div class="form-group"><label>Total Children</label><input type="number"></div>
+                                    <div class="form-group"><label>Children Teachers</label><input type="number"></div>
+                                    <div class="form-group"><label>Converts</label><input type="number"></div>
+                                    <div class="form-group"><label>Cost</label><input type="number"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="final" class="tab-content">
+                            <div class="grid-2">
+                                <div class="form-section-card">
+                                    <h3 class="section-title">V. Plans & VI. Budget</h3>
+                                    <textarea class="dash-textarea" rows="4" placeholder="Next term plans..."></textarea>
+                                    <div class="mt-15">
+                                        <label>Projected Budget Total:</label>
+                                        <input type="number" class="dash-input">
+                                    </div>
+                                </div>
+                                <div class="form-section-card">
+                                    <h3 class="section-title">VII. Recommendation</h3>
+                                    <textarea class="dash-textarea" rows="4" placeholder="Your recommendations..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions-sticky">
+                            <button type="submit" class="btn-text">Submit Zonal Termly Report</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</body>
+</html>

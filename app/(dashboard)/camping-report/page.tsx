@@ -1,9 +1,23 @@
 "use client";
 
-import { Tent, Bird, Flame, Palette, Rocket, Info } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Tent, Bird, Flame, Palette, Rocket, Info, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { fetchDeptStats } from "@/lib/stats";
 
 export default function CampingReportPage() {
+  const [statsData, setStatsData] = useState({ count: 0, impact: 0 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      const data = await fetchDeptStats("Missionary Report"); // Proxy for impact
+      setStatsData(data);
+      setLoading(false);
+    };
+    load();
+  }, []);
+
   const reports = [
     {
       icon: <Tent className="text-[#1b5e20]" size={24} />,
@@ -43,11 +57,6 @@ export default function CampingReportPage() {
     },
   ];
 
-  const stats = [
-    { name: "Easter Pilgrims' Conf.", attendance: 350, decisions: 15, status: "Balanced" },
-    { name: "SLVC (Student Camp)", attendance: "--", decisions: "--", status: "Awaiting" },
-  ];
-
   return (
     <div className="space-y-8">
       <div className="mb-6">
@@ -55,10 +64,21 @@ export default function CampingReportPage() {
         <p className="text-gray-600">Centralized view of all residential camps and conferences across Eleme Area.</p>
       </div>
 
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+         <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-[#1b5e20]">
+            <h3 className="text-sm font-bold text-gray-500 uppercase">Total Camps Held</h3>
+            {loading ? <Loader2 className="animate-spin mt-2" /> : <div className="text-3xl font-bold">{statsData.count}</div>}
+         </div>
+         <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-[#ffca28]">
+            <h3 className="text-sm font-bold text-gray-500 uppercase">Total Spiritual Impact</h3>
+            {loading ? <Loader2 className="animate-spin mt-2" /> : <div className="text-3xl font-bold">{statsData.impact.toLocaleString()}</div>}
+         </div>
+      </div>
+
       <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 flex gap-4 items-start">
         <Info className="text-blue-500 shrink-0 mt-0.5" size={20} />
         <p className="text-sm text-gray-700 leading-relaxed font-medium">
-          <strong>System Note:</strong> Camping reports are integrated with their respective departments. Clicking "Go to Form" will route you to the departmental reporting unit to ensure data consistency.
+          <strong>System Note:</strong> Camping reports are integrated with their respective departments. Clicking "Go to Form" will route you to the departmental reporting unit.
         </p>
       </div>
 
@@ -78,36 +98,6 @@ export default function CampingReportPage() {
             </Link>
           </div>
         ))}
-      </div>
-
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 overflow-hidden">
-        <h3 className="text-lg font-bold text-gray-800 mb-4">Camping Statistics Overview (Current Year)</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b border-gray-100">
-                <th className="pb-3 px-2 font-bold text-gray-500 text-sm uppercase tracking-wider">Camp Name</th>
-                <th className="pb-3 px-2 font-bold text-gray-500 text-sm uppercase tracking-wider">Attendance</th>
-                <th className="pb-3 px-2 font-bold text-gray-500 text-sm uppercase tracking-wider">Decisions</th>
-                <th className="pb-3 px-2 font-bold text-gray-500 text-sm uppercase tracking-wider">Finance Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {stats.map((stat, i) => (
-                <tr key={i} className="hover:bg-[#fffdf7] transition-colors">
-                  <td className="py-4 px-2 text-sm font-bold text-gray-900">{stat.name}</td>
-                  <td className="py-4 px-2 text-sm text-gray-600">{stat.attendance}</td>
-                  <td className="py-4 px-2 text-sm text-gray-600">{stat.decisions}</td>
-                  <td className="py-4 px-2 text-sm">
-                    <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter ${stat.status === 'Balanced' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                      {stat.status}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       </div>
     </div>
   );

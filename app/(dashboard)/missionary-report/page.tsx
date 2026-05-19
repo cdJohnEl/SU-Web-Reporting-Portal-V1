@@ -78,12 +78,23 @@ export default function MissionaryReportPage() {
     
     try {
       const reportId = `report_${auth.currentUser.uid}_${Date.now()}`;
+      
+      // Compute aggregates for easy dashboard access
+      const totalDecisions = data.tableB.reduce((sum, row) => sum + (parseInt(row.attendance) || 0), 0);
+      const totalSchools = (parseInt(data.statsF.totalSec) || 0) + (parseInt(data.statsF.totalPri) || 0);
+
       await setDoc(doc(db, "reports", reportId), {
         uid: auth.currentUser.uid,
+        userName: auth.currentUser.displayName || "Missionary",
         reportType: "Missionary Report",
         status: status,
         data: data,
+        month: data.monthYear,
+        year: parseInt(data.monthYear.split('-')[0]),
+        decisions: totalDecisions,
+        schoolsVisited: totalSchools,
         createdAt: serverTimestamp(),
+        submittedAt: status === "submitted" ? serverTimestamp() : null,
       });
       alert(status === "draft" ? "Draft saved successfully!" : "Report submitted officially!");
       if (status === "submitted") router.push("/dashboard");

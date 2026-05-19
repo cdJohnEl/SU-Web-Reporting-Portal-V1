@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Setup - SU Eleme</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm">SU</div>
+                <span>Eleme Area</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active"><a href="dashboard.html">Home</a></li>
+                </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <header class="top-bar">
+                <div class="breadcrumb">Reporting / <strong>Initialize Report</strong></div>
+            </header>
+
+            <div class="content-padding flex-center">
+                <div class="context-card">
+                    <div class="context-header">
+                        <h2>Initialize Report</h2>
+                        <p>Confirm the details below to proceed to the secure form.</p>
+                    </div>
+
+                    <form action="form-access-control.html">
+                        <div class="autofill-section">
+                            <div class="form-group">
+                                <label>Report Type</label>
+                                <input type="text" class="dash-input readonly" value="Schools and Youth Report" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Office / Reporter</label>
+                                <input type="text" class="dash-input readonly" value="Zonal Schools Coordinator" readonly>
+                            </div>
+                        </div>
+
+                        <div class="selection-section">
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label>Reporting Year</label>
+                                    <select class="dash-select" required>
+                                        <option>2026</option>
+                                        <option>2025</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Reporting Month/Term</label>
+                                    <select class="dash-select" required>
+                                        <option>April (Monthly)</option>
+                                        <option>1st Term (Termly)</option>
+                                        <option>2nd Term (Termly)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label>Select Zone</label>
+                                    <select class="dash-select" id="zoneSelect" required>
+                                        <option value="" disabled selected>Choose Zone...</option>
+                                        <option>Nchia</option>
+                                        <option>Gokana</option>
+                                        <option>Ogoni</option>
+                                        <option>Oyigbo</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Select Group</label>
+                                    <select class="dash-select" required>
+                                        <option value="" disabled selected>Choose Group...</option>
+                                        <option>Group A (Nchia 1)</option>
+                                        <option>Group B (Nchia 2)</option>
+                                        <option>Regional Group</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="status-info-box">
+                            <p><strong>Note:</strong> Selecting a Zone and Group will automatically sync data if another office has already entered related information for this period.</p>
+                        </div>
+
+                        <div class="form-actions mt-20">
+                            <button type="submit" class="btn-text w-full">Proceed to Verification →</button>
+                            <button type="button" class="btn-text w-full mt-10" onclick="history.back()">Go Back</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Get the Report Name from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const reportName = urlParams.get('report');
+
+        // 2. Get User Details from Storage
+        const userData = JSON.parse(sessionStorage.getItem('currentUser'));
+
+        // 3. Auto-fill the "Read-Only" fields
+        if (reportName) {
+            // Find the input field for Report Type (make sure it has an ID or use querySelector)
+            document.querySelector('input[value="Schools and Youth Report"]').value = reportName;
+        }
+
+        if (userData) {
+            // Find the input field for Office/Reporter
+            document.querySelector('input[value="Zonal Schools Coordinator"]').value = `${userData.name} (${userData.office})`;
+            
+            // Optional: Pre-select the user's assigned zone
+            const zoneSelect = document.getElementById('zoneSelect');
+            if (zoneSelect) {
+                zoneSelect.value = userData.zone;
+            }
+        }
+    });
+
+    // 4. Pass the data to the Security Verification Page
+    function proceedToSecurity() {
+        const selectedZone = document.getElementById('zoneSelect').value;
+        const currentReport = document.querySelector('input[readonly]').value;
+        
+        // Save these choices so the Security and Form pages know what we are working on
+        sessionStorage.setItem('activeReportContext', JSON.stringify({
+            report: currentReport,
+            zone: selectedZone
+        }));
+
+        window.location.href = "form-access-control.html";
+    }
+</script>
+</body>
+</html>

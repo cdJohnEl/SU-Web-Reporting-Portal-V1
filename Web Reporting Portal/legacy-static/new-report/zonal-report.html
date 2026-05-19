@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zonal Report - SU Eleme</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm">SU</div>
+                <span>Eleme Area</span>
+            </div>
+			
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="dashboard.html">Home</a></li>
+                <li class="nav-label">Core Ministry Reports</li>
+                <li class="nav-item"><a href="schools-youth.html">Schools & Youth Report</a></li>
+                <li class="nav-item"><a href="children-report.html">Children Report</a></li>
+                <li class="nav-item"><a href="pilgrims-report.html">Pilgrims' Report</a></li>
+                <li class="nav-item"><a href="camping-report.html">Camping Report</a></li>
+                
+				<li class="nav-label">Operational</li>
+				<li class="nav-item"><a href="missionary-report.html">Missionary Report</a></li>
+				<li class="nav-item active"><a href="zonal-report.html">Zonal Report</a></li>
+				<li class="nav-item"><a href="#">Tour Report</a></li>
+                <li class="nav-item"><a href="#">Trainings & Meetings</a></li>
+				<li class="nav-item"><a href="termly-schools-report.html">Termly Report</a></li>
+                <li class="nav-item"><a href="#">Reading Note Distribution</a></li>
+                
+                <li class="nav-label">System</li>
+				<li class="nav-item"><a href="#">User's Profile</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <header class="top-bar">
+                <div class="breadcrumb">Zonal Management / <strong>Zonal Reporting Format</strong></div>
+                <div class="user-profile">
+                    <span><strong>Zonal Representative</strong></span>
+                    <div class="profile-circle">ZR</div>
+                </div>
+            </header>
+
+            <div class="content-padding">
+                <div class="report-container">
+                    <div class="section-header">
+                        <h2>Zonal Progress Report</h2>
+                        <p>Scripture Union Nigeria, Eleme Area.</p>
+                        <div class="grid-3 mt-15">
+                            <div class="form-group"><label>Zone</label><input type="text" class="dash-input"></div>
+                            <div class="form-group"><label>Period</label><input type="text" class="dash-input"></div>
+                            <div class="form-group"><label>Date</label><input type="date" class="dash-input"></div>
+                        </div>
+                        <div class="form-group mt-15">
+                            <label>Preamble</label>
+                            <textarea class="dash-textarea" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section-card border-left-gold">
+                        <h3 class="section-title">Part A: Statistics</h3>
+                        <div class="grid-4">
+                            <div class="form-group"><label>Pilgrims</label><input type="number" class="dash-input-sm"></div>
+                            <div class="form-group"><label>Youths</label><input type="number" class="dash-input-sm"></div>
+                            <div class="form-group"><label>Children</label><input type="number" class="dash-input-sm"></div>
+                            <div class="form-group"><label>Prim. Sch Fellowships</label><input type="number" class="dash-input-sm"></div>
+                            <div class="form-group"><label>Sec. Sch Fellowships</label><input type="number" class="dash-input-sm"></div>
+                            <div class="form-group"><label>NBC Units</label><input type="number" class="dash-input-sm"></div>
+                            <div class="form-group"><label>School Visitors</label><input type="number" class="dash-input-sm"></div>
+                            <div class="form-group"><label>Financial Members</label><input type="number" class="dash-input-sm"></div>
+                            <div class="form-group"><label>Married Members</label><input type="number" class="dash-input-sm"></div>
+                            <div class="form-group"><label>Missionaries</label><input type="number" class="dash-input-sm"></div>
+                        </div>
+                        
+                        <div class="form-section-card">
+                        <h4 class="mini-title">Ministry Sales & Distribution</h4>
+                        <div class="grid-3">
+                            <div class="pub-group">
+                                <label>Reading Notes</label>
+                                <div class="sub-input"><span>Daily Guide:</span><input type="number"></div>
+                                <div class="sub-input"><span>Daily Power:</span><input type="number"></div>
+                                <div class="sub-input"><span>Daily Milk:</span><input type="number"></div>
+                            </div>
+                            <div class="pub-group">
+                                <label>Ministry Publications</label>
+                                <div class="sub-input"><span>SBSO/PBSO:</span><input type="number"></div>
+                                <div class="sub-input"><span>SEARCH:</span><input type="number"></div>
+                                <div class="sub-input"><span>Follow Up:</span><input type="number"></div>
+                            </div>
+                            <div class="pub-group">
+                                <label>Vital Events</label>
+                                <div class="sub-input"><span>Births:</span><input type="number"></div>
+                                <div class="sub-input"><span>Marriages:</span><input type="number"></div>
+                                <div class="sub-input"><span>Deaths:</span><input type="number"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section-card">
+                        <h3 class="section-title">Part B: Programmes Held</h3>
+                        
+                        <h4 class="table-subheading">General & Adult Ministry</h4>
+                        <table class="report-table">
+                            <thead>
+                                <tr><th>Programme</th><th>Attendance</th><th>Decisions</th><th>Cost (₦)</th><th>Remark</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Easter Pilgrims' Conf.</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+                                <tr><td>SU Week of Sacrifice</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+                                <tr><td>Prayer & Gift Day</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+                                <tr><td>Mission Week/Outreach</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+                            </tbody>
+                        </table>
+
+                        <h4 class="table-subheading mt-15">Schools & Youth Ministry</h4>
+                        <table class="report-table">
+                            <thead>
+                                <tr><th>Programme</th><th>Attendance</th><th>Decisions</th><th>Cost (₦)</th><th>Remark</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Zonal Schools' Rally</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+                                <tr><td>Student Leaders Training</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+                                <tr><td>BRP (Bible Reading)</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+                                <tr><td>Christian Teachers Seminar</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+                                <tr><td>Valentine's Day</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+                            </tbody>
+                        </table>
+
+                        <h4 class="table-subheading mt-15">Children Ministry</h4>
+                        <table class="report-table">
+                            <thead>
+                                <tr><th>Programme</th><th>Attendance</th><th>Decisions</th><th>Cost (₦)</th><th>Remark</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Group Children Day</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+                                <tr><td>Christmas Party</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+                                <tr><td>Easter Children Celeb.</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-section-card bg-light-green">
+                        <h3 class="section-title">Part C: Challenges & Other Activities</h3>
+                        <textarea class="dash-textarea-large" placeholder="Enter challenges encountered and any other notable events here..."></textarea>
+                    </div>
+
+                    <div class="form-actions-sticky">
+                        <button class="btn-text">Submit Final Zonal Report</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
