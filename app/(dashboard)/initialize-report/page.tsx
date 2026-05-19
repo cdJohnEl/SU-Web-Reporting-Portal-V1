@@ -73,7 +73,7 @@ function InitializeReportContent() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="year">Reporting Year</Label>
-                  <Select value={year} onValueChange={(val) => setYear(val)}>
+                  <Select value={year} onValueChange={(val) => setYear(val || "")}>
                     <SelectTrigger id="year">
                       <SelectValue placeholder="Select Year" />
                     </SelectTrigger>
@@ -86,7 +86,7 @@ function InitializeReportContent() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="period">Reporting Period</Label>
-                  <Select value={period} onValueChange={(val) => setPeriod(val)} required>
+                  <Select value={period} onValueChange={(val) => setPeriod(val || "")} required>
                     <SelectTrigger id="period">
                       <SelectValue placeholder="Select Month/Term" />
                     </SelectTrigger>
@@ -105,7 +105,7 @@ function InitializeReportContent() {
 
               <div className="space-y-2">
                 <Label htmlFor="zone">Select Zone</Label>
-                <Select value={zone} onValueChange={(val) => setZone(val)} required>
+                <Select value={zone} onValueChange={(val) => setZone(val || "")} required>
                   <SelectTrigger id="zone">
                     <SelectValue placeholder="Choose Zone..." />
                   </SelectTrigger>
