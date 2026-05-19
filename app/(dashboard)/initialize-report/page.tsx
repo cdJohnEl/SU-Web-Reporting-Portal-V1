@@ -15,10 +15,10 @@ function InitializeReportContent() {
   const type = searchParams.get("type");
   
   // State for form
-  const [reportType, setReportType] = useState("");
-  const [year, setYear] = useState(new Date().getFullYear().toString());
-  const [period, setPeriod] = useState("");
-  const [zone, setZone] = useState("");
+  const [reportType, setReportType] = useState<string>("");
+  const [year, setYear] = useState<string>(new Date().getFullYear().toString());
+  const [period, setPeriod] = useState<string>("");
+  const [zone, setZone] = useState<string>("");
 
   useEffect(() => {
     if (type === "zonal") setReportType("Zonal Progress Report");

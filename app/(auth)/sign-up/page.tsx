@@ -32,6 +32,22 @@ export default function SignUpPage() {
     const securityHint = formData.get("securityHint") as string;
     const reason = formData.get("reason") as string;
 
+    // Simple Email Validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
+      setLoading(false);
+      return;
+    }
+
+    // Phone Validation (11 digits)
+    const phoneDigits = phone.replace(/\D/g, "");
+    if (phoneDigits.length !== 11) {
+      setError("Phone number must be exactly 11 digits (e.g. 08012345678).");
+      setLoading(false);
+      return;
+    }
+
     try {
       // 1. Create Auth User
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
