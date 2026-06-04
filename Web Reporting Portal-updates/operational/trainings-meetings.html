@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainings & Meetings - SU Eleme</title>
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm">SU</div>
+                <span>Eleme Area</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../dashboard.html">Home</a></li>
+                <li class="nav-label">Core Ministry Reports</li>
+                <li class="nav-item"><a href="../ministry/schools/schools-youth.html">Schools & Youth Report</a></li>
+                <li class="nav-item"><a href="../ministry/children/children-report.html">Children Report</a></li>
+                <li class="nav-item"><a href="../ministry/pilgrims/pilgrims-report.html">Pilgrims' Report</a></li>
+                <li class="nav-item"><a href="camping-report.html">Camping Report</a></li>
+                
+                <li class="nav-label">Operational</li>
+                <li class="nav-item"><a href="tour-report.html">Tour Report</a></li>
+                <li class="nav-item active"><a href="trainings-meetings.html">Trainings & Meetings</a></li>
+                
+                <li class="nav-label">Account</li>
+                <li class="nav-item"><a href="#" onclick="handleLogout()" style="color: #d32f2f;">🚪 Log Out</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <header class="top-bar">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                <div class="breadcrumb">Operational / <strong>Trainings Portfolio</strong></div>
+            </header>
+
+            <div class="mobile-overlay" onclick="toggleSidebar()"></div>
+
+            <div class="content-padding">
+                <div class="section-header">
+                    <h2>Trainings, Seminars & Committee Meetings</h2>
+                    <p>Track leadership development programs, staff training execution metrics, and attendance indicators.</p>
+                </div>
+
+                <form id="training-report-form">
+                    <div class="form-section-card">
+                        <h3 class="section-title">Program Matrix Execution</h3>
+                        <div class="table-responsive">
+                            <table class="classic-table" id="training-table">
+                                <thead>
+                                    <tr>
+                                        <th>Meeting / Training Description</th>
+                                        <th>Venue</th>
+                                        <th>Brothers</th>
+                                        <th>Sisters</th>
+                                        <th>Total Attendance</th>
+                                        <th>Financial Cost (₦)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="table-input memory-input" list="saved-training-types" data-category="training_types" placeholder="e.g., School Visitors Seminar" required>
+                                            <datalist id="saved-training-types"></datalist>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="table-input memory-input" list="saved-venues" data-category="venues" placeholder="Location...">
+                                            <datalist id="saved-venues"></datalist>
+                                        </td>
+                                        <td><input type="number" class="table-input calc-input parts-m" value="0" min="0" oninput="calculateGridTotals(this)"></td>
+                                        <td><input type="number" class="table-input calc-input parts-f" value="0" min="0" oninput="calculateGridTotals(this)"></td>
+                                        <td><input type="number" class="table-input row-total" value="0" readonly style="background:#f0f0f0;"></td>
+                                        <td><input type="number" class="table-input" placeholder="0.00"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn-add-row mt-10" onclick="addRow('training-table')">➕ Add Row</button>
+                    </div>
+
+                    <div class="form-actions-sticky">
+                        <button type="submit" class="btn-primary-green">Commit Training Records</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="../assets/app-scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Rally Report - SU Eleme</title>
+    <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm">SU</div>
+                <span>Eleme Area</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../../dashboard.html">Home</a></li>
+                <li class="nav-label">Core Ministry Reports</li>
+                <li class="nav-item active"><a href="schools-youth.html">Schools & Youth</a></li>
+                <li class="nav-item"><a href="../children/children-report.html">Children Report</a></li>
+                <li class="nav-item"><a href="../pilgrims/pilgrims-report.html">Pilgrims' Report</a></li>
+                <li class="nav-item"><a href="../../operational/camping-report.html">Camping Report</a></li>
+                
+                <li class="nav-label">Operational</li>
+                <li class="nav-item"><a href="../../operational/tour-report.html">Tour Report</a></li>
+                <li class="nav-item"><a href="../../operational/trainings-meetings.html">Trainings & Meetings</a></li>
+                
+                <li class="nav-label">Account</li>
+                <li class="nav-item"><a href="#" onclick="handleLogout()" style="color: #d32f2f;">🚪 Log Out</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <header class="top-bar">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                <div class="breadcrumb">Schools & Youth / <strong>Student Rally Report</strong></div>
+            </header>
+
+            <div class="mobile-overlay" onclick="toggleSidebar()"></div>
+
+            <div class="content-padding">
+                <div class="section-header">
+                    <h2>Zonal Student Rally Report</h2>
+                    <p>Track mobilization turnouts, resource facilitators, cost evaluations, and salvations.</p>
+                </div>
+
+                <form id="student-rally-form">
+                    <div class="form-section-card">
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Zone Context</label>
+                                <input type="text" id="rally-zone-display" class="dash-input readonly" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section-card">
+                        <div class="grid-2">
+                            <div class="form-group"><label>Date / Duration</label><input type="text" class="dash-input" required></div>
+                            <div class="form-group"><label>Venue(s)</label><input type="text" class="dash-input" required></div>
+                        </div>
+                        <div class="grid-2" style="margin-top: 15px; background: #f1f8f1; padding: 15px; border-radius: 6px;">
+                            <div class="form-group"><label>Total Student Attendance</label><input type="number" class="dash-input" required></div>
+                            <div class="form-group"><label>Number of Converts</label><input type="number" class="dash-input" required></div>
+                        </div>
+                        <div class="grid-2" style="margin-top: 15px;">
+                            <div class="form-group"><label>Resource Persons</label><input type="text" class="dash-input" required></div>
+                            <div class="form-group"><label>Cost Incurred (₦)</label><input type="number" class="dash-input" required></div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions-sticky">
+                        <button type="submit" class="btn-primary-green">Submit Student Rally Report</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../assets/app-scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const context = JSON.parse(sessionStorage.getItem('activeReportContext'));
+            if (context) { document.getElementById('rally-zone-display').value = context.zone; }
+        });
+
+        document.getElementById('student-rally-form').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            const context = JSON.parse(sessionStorage.getItem('activeReportContext'));
+            if (!context) return;
+            const inputs = this.querySelectorAll('input');
+            const rallyData = {
+                date: inputs[1].value, venue: inputs[2].value, attendance: inputs[3].value,
+                converts: inputs[4].value, resourcePersons: inputs[5].value, cost: inputs[6].value
+            };
+            const syncKey = `su_sync_${context.zone}_${context.year}_${context.period}_student-rally`;
+            localStorage.setItem(syncKey, JSON.stringify(rallyData));
+            alert(`Rally data saved and successfully synced for ${context.zone} Zone!`);
+            window.location.href = "../../dashboard.html";
+        });
+    </script>
+</body>
+</html>

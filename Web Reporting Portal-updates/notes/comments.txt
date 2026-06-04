@@ -1,0 +1,22 @@
+Functions and Backend Tasks
+
+1. Pages are now made responsive: mobile view is present
+2. Java Script page has been made separately and linked to all pages
+3. Menubar for mobile view
+4. index.html is now present - the front door
+5. Logout button added
+6. Security check that kicks uninvited users back to the index page.
+
+
+
+
+task
+Edit html pages with login.html to index.html
+
+* Linking all these report together such that if someone in a zone either zonal rep or zonal school scordinator has alreafy filled 
+the form for a particular program, others will see the entries for thier zone
+
+* How to make it such that individuals can only see the report for the zone they are parmitted to see 
+* They can't submit unless they have check through (not necessarily filled) all the entries for confirmation
+* ALlow refill /update of report
+* Responsive web, scalability and menu bar for phone

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missionary Report - SU Eleme</title>
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm">SU</div>
+                <span>Eleme Area</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../dashboard.html">Home</a></li>
+                <li class="nav-label">Core Ministry Reports</li>
+                <li class="nav-item"><a href="../ministry/schools/schools-youth.html">Schools & Youth Report</a></li>
+                <li class="nav-item"><a href="../ministry/children/children-report.html">Children Report</a></li>
+                <li class="nav-item"><a href="../ministry/pilgrims/pilgrims-report.html">Pilgrims' Report</a></li>
+                <li class="nav-item"><a href="camping-report.html">Camping Report</a></li>
+                
+                <li class="nav-label">Operational</li>
+                <li class="nav-item"><a href="tour-report.html">Tour Report</a></li>
+                <li class="nav-item"><a href="trainings-meetings.html">Trainings & Meetings</a></li>
+                
+                <li class="nav-label">Account</li>
+                <li class="nav-item"><a href="#" onclick="handleLogout()" style="color: #d32f2f;">🚪 Log Out</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <header class="top-bar">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                <div class="breadcrumb">Operational / <strong>Missionary Report Form</strong></div>
+            </header>
+
+            <div class="mobile-overlay" onclick="toggleSidebar()"></div>
+
+            <div class="content-padding">
+                <div class="section-header">
+                    <h2>Missionary & Permanent Schools' Visitor Report</h2>
+                    <p>Comprehensive tracking for visitation logs and field operations.</p>
+                </div>
+                
+                <!-- Zonal Sync Notice Banner -->
+                <div id="zonal-sync-notice" style="display: none; background-color: #e3f2fd; color: #0d47a1; border-left: 5px solid #2196f3; padding: 12px; margin-bottom: 20px; border-radius: 4px; font-size: 0.9rem;">
+                    <!-- Filled dynamically by JavaScript -->
+                </div>
+
+                <form id="missionary-report-form">
+                    <div class="form-section-card">
+                        <h3 class="section-title">Context Scope Parameter</h3>
+                        <div class="form-group">
+                            <label>Zone Context</label>
+                            <input type="text" id="missionary-zone-display" class="dash-input readonly" readonly>
+                        </div>
+                        
+                        <div class="grid-2 mt-15">
+                            <div class="form-group">
+                                <label>Student Rally Attendance</label>
+                                <input type="number" id="missionary-rally-attendance" class="dash-input" placeholder="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Student Rally Converts</label>
+                                <input type="number" id="missionary-rally-converts" class="dash-input" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions-sticky">
+                        <button type="submit" class="btn-primary-green">Submit Missionary Report</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="../assets/app-scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const context = JSON.parse(sessionStorage.getItem('activeReportContext'));
+            if (!context) return;
+            
+            document.getElementById('missionary-zone-display').value = context.zone;
+
+            // Sync Bridge Check
+            const syncKey = `su_sync_${context.zone}_${context.year}_${context.period}_student-rally`;
+            const syncedRallyData = JSON.parse(localStorage.getItem(syncKey));
+
+            if (syncedRallyData) {
+                const rallyAttendanceField = document.getElementById('missionary-rally-attendance');
+                const rallyConvertsField = document.getElementById('missionary-rally-converts');
+                const syncNoticeBanner = document.getElementById('zonal-sync-notice');
+
+                if (rallyAttendanceField) rallyAttendanceField.value = syncedRallyData.attendance;
+                if (rallyConvertsField) rallyConvertsField.value = syncedRallyData.converts;
+
+                if (syncNoticeBanner) {
+                    syncNoticeBanner.innerHTML = `🔄 <strong>Data Sync Active:</strong> Student Rally attendance (${syncedRallyData.attendance}) and converts (${syncedRallyData.converts}) have been pre-filled from the Zonal Schools Coordinator's report.`;
+                    syncNoticeBanner.style.display = 'block';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

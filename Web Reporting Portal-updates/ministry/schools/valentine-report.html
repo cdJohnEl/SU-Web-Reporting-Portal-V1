@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Outreach Report - SU Eleme</title>
+    <!-- Pointing up TWO levels to assets -->
+    <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm">SU</div>
+                <span>Eleme Area</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../../dashboard.html">Home</a></li>
+                <li class="nav-label">Core Ministry Reports</li>
+                <li class="nav-item active"><a href="schools-youth.html">Schools & Youth</a></li>
+                <li class="nav-item"><a href="../children/children-report.html">Children Report</a></li>
+                <li class="nav-item"><a href="../pilgrims/pilgrims-report.html">Pilgrims' Report</a></li>
+                <li class="nav-item"><a href="../../operational/camping-report.html">Camping Report</a></li>
+                
+                <li class="nav-label">Operational</li>
+                <li class="nav-item"><a href="../../operational/tour-report.html">Tour Report</a></li>
+                <li class="nav-item"><a href="../../operational/trainings-meetings.html">Trainings & Meetings</a></li>
+                
+                <li class="nav-label">Account</li>
+                <li class="nav-item"><a href="#" onclick="handleLogout()" style="color: #d32f2f;">🚪 Log Out</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <header class="top-bar">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                <div class="breadcrumb">Schools & Youth / <strong>Valentine Outreach Report</strong></div>
+            </header>
+
+            <div class="mobile-overlay" onclick="toggleSidebar()"></div>
+
+            <div class="content-padding">
+                <div class="section-header">
+                    <h2>Valentine Programme Outreach Report</h2>
+                    <p>Log execution metrics, spiritual outcomes, and financial records for the annual youth relationship outreaches.</p>
+                </div>
+
+                <form id="valentine-outreach-form">
+                    
+                    <div class="form-section-card">
+                        <h3 class="section-title">I. Context Scope Parameters</h3>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Zone Context</label>
+                                <input type="text" id="report-zone-display" class="dash-input readonly" readonly placeholder="Auto-populating profile path...">
+                            </div>
+                            <div class="form-group">
+                                <label>Target Scope Group / Branch</label>
+                                <input type="text" id="report-group-display" class="dash-input readonly" readonly placeholder="Auto-populating group scope...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section-card">
+                        <h3 class="section-title">II. Core Operational Metrics</h3>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Number of Schools Reached</label>
+                                <input type="number" class="dash-input" min="0" placeholder="Total educational institutions engaged" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Number of Churches Involved / Engaged</label>
+                                <input type="number" class="dash-input" min="0" placeholder="Total partnering local assemblies" required>
+                            </div>
+                        </div>
+
+                        <div class="grid-2" style="margin-top: 15px; background: #f9f9f9; padding: 15px; border-radius: 6px; border: 1px solid #eaeaea;">
+                            <div class="form-group">
+                                <label>Number of Youths / Students in Attendance</label>
+                                <input type="number" class="dash-input" min="0" placeholder="Total student mobilization count" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Number of Converts (Decisions for Christ)</label>
+                                <input type="number" class="dash-input" min="0" placeholder="Total decision card sign-ups" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section-card">
+                        <h3 class="section-title">III. Program Financial Statements</h3>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Total Program Income (₦)</label>
+                                <input type="number" step="0.01" class="dash-input" placeholder="0.00" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Program Expenditure (₦)</label>
+                                <input type="number" step="0.01" class="dash-input" placeholder="0.00" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions-sticky">
+                        <button type="submit" class="btn-primary-green">Submit Valentine Report</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Pointing up TWO levels to assets -->
+    <script src="../../assets/app-scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const context = JSON.parse(sessionStorage.getItem('activeReportContext'));
+            if (context) {
+                document.getElementById('report-zone-display').value = context.zone;
+                document.getElementById('report-group-display').value = context.group;
+            }
+        });
+    </script>
+</body>
+</html>

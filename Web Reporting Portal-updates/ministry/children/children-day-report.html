@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Children's Day Report - SU Eleme</title>
+    <!-- Pointing up TWO levels to assets -->
+    <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm">SU</div>
+                <span>Eleme Area</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../../dashboard.html">Home</a></li>
+                <li class="nav-label">Core Ministry Reports</li>
+                <li class="nav-item"><a href="../schools/schools-youth.html">Schools & Youth Report</a></li>
+                <li class="nav-item active"><a href="children-report.html">Children Report</a></li>
+                <li class="nav-item"><a href="../pilgrims/pilgrims-report.html">Pilgrims' Report</a></li>
+                <li class="nav-item"><a href="../../operational/camping-report.html">Camping Report</a></li>
+                
+                <li class="nav-label">Operational</li>
+                <li class="nav-item"><a href="../../operational/tour-report.html">Tour Report</a></li>
+                <li class="nav-item"><a href="../../operational/trainings-meetings.html">Trainings & Meetings</a></li>
+                
+                <li class="nav-label">Account</li>
+                <li class="nav-item"><a href="#" onclick="handleLogout()" style="color: #d32f2f;">🚪 Log Out</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <header class="top-bar">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                <div class="breadcrumb">Children Ministry / <strong>Children's Day Report</strong></div>
+            </header>
+
+            <div class="mobile-overlay" onclick="toggleSidebar()"></div>
+
+            <div class="content-padding">
+                <div class="section-header">
+                    <h2>National Children's Day Celebration Report</h2>
+                    <p>Provide quantitative stats and review narratives for the May 27th zonal celebratory programs.</p>
+                </div>
+
+                <form id="children-day-form">
+                    
+                    <div class="form-section-card">
+                        <h3 class="section-title">I. Context Scope</h3>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Zone Context</label>
+                                <input type="text" id="report-zone-display" class="dash-input readonly" readonly placeholder="Auto-populated from context setup...">
+                            </div>
+                            <div class="form-group">
+                                <label>Total Execution Centers / Groups</label>
+                                <input type="number" class="dash-input" min="0" placeholder="Number of groups that held the program" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section-card">
+                        <h3 class="section-title">II. Attendance & Structural Workforce Metrics</h3>
+                        
+                        <div class="grid-3" style="background: #f9f9f9; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #eaeaea;">
+                            <div class="form-group">
+                                <label>Male Children Attendance</label>
+                                <input type="number" class="dash-input calc-input parts-m" value="0" min="0" oninput="calculateGridTotals(this)" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Female Children Attendance</label>
+                                <input type="number" class="dash-input calc-input parts-f" value="0" min="0" oninput="calculateGridTotals(this)" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Children Attendance</label>
+                                <input type="number" class="dash-input row-total" value="0" readonly style="background: #e9ecef; font-weight: bold; cursor: not-allowed;">
+                            </div>
+                        </div>
+
+                        <div class="grid-4">
+                            <div class="form-group">
+                                <label>No. of Primary Schools Reached</label>
+                                <input type="number" class="dash-input" min="0" placeholder="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Children Workers / Volunteers</label>
+                                <input type="number" class="dash-input" min="0" placeholder="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Primary School Christian Teachers</label>
+                                <input type="number" class="dash-input" min="0" placeholder="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Decisions / Converts</label>
+                                <input type="number" class="dash-input" min="0" placeholder="0" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section-card">
+                        <h3 class="section-title">III. Zonal Program Financial Statements</h3>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Total Revenue / Income (₦)</label>
+                                <input type="number" step="0.01" class="dash-input" placeholder="0.00" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Expenditure (₦)</label>
+                                <input type="number" step="0.01" class="dash-input" placeholder="0.00" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section-card">
+                        <h3 class="section-title">IV. Narrative Field Reports</h3>
+                        
+                        <div class="form-group">
+                            <label>Program Challenges Encountered</label>
+                            <textarea class="dash-textarea" rows="3" placeholder="Detail constraints, weather issues, mobilization bottlenecks, etc."></textarea>
+                        </div>
+                        
+                        <div class="form-group mt-15">
+                            <label>Key Structural Achievements</label>
+                            <textarea class="dash-textarea memory-input" id="day-achievements" list="saved-achievements" data-category="children_achievements" rows="3" placeholder="Record notable milestones, testimonies, or successes..."></textarea>
+                            <datalist id="saved-achievements"></datalist>
+                        </div>
+
+                        <div class="form-group mt-15">
+                            <label>Operational Recommendations</label>
+                            <textarea class="dash-textarea" rows="3" placeholder="Provide suggestions for future Children's Day programs..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions-sticky">
+                        <button type="submit" class="btn-primary-green">Submit Children's Day Report</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Pointing up TWO levels to assets -->
+    <script src="../../assets/app-scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reportContext = JSON.parse(sessionStorage.getItem('activeReportContext'));
+            const zoneDisplay = document.getElementById('report-zone-display');
+            if (reportContext && zoneDisplay) {
+                zoneDisplay.value = `${reportContext.zone} — (Group Context: ${reportContext.group})`;
+            }
+        });
+    </script>
+</body>
+</html>

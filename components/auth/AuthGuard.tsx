@@ -13,7 +13,15 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        setUser(currentUser);
+        // Check if on verify-login page
+        const isVerifying = window.location.pathname === "/verify-login";
+        const isVerified = sessionStorage.getItem("su_portal_verified") === "true";
+
+        if (!isVerified && !isVerifying) {
+          router.push("/verify-login");
+        } else {
+          setUser(currentUser);
+        }
       } else {
         router.push("/login");
       }

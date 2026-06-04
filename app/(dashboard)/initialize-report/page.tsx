@@ -21,9 +21,20 @@ function InitializeReportContent() {
   const [zone, setZone] = useState<string>("");
 
   useEffect(() => {
-    if (type === "zonal") setReportType("Zonal Progress Report");
-    else if (type === "schools-termly") setReportType("Schools Termly Report");
-    else setReportType("Schools & Youth Report");
+    const typeNames: Record<string, string> = {
+      "zonal": "Zonal Progress Report",
+      "schools-termly": "Schools Termly Report",
+      "aids-for-life": "Aids for Life Week Report",
+      "leadership-training": "Leadership Training Report",
+      "valentine-program": "Valentine Program Outreach",
+      "student-rally": "Student Rally Statistics",
+      "tour": "Zonal Tour Report",
+      "trainings-meetings": "Trainings & Meetings Report",
+      "family-week": "National Family Week Report",
+      "children-day": "Children's Day Celebration Report",
+      "missionary": "Missionary & Permanent Schools' Visitor Report"
+    };
+    setReportType(typeNames[type || ""] || "General Ministry Report");
   }, [type]);
 
   const handleProceed = (e: React.FormEvent) => {
@@ -39,13 +50,23 @@ function InitializeReportContent() {
     
     const query = new URLSearchParams(context).toString();
     
-    if (type === "zonal") {
-      router.push(`/zonal-report?${query}`);
-    } else if (type === "schools-termly") {
-      router.push(`/schools-termly?${query}`);
-    } else {
-      router.push(`/schools-youth?${query}`);
-    }
+    // Specific routes for built-in reports
+    const routes: Record<string, string> = {
+      "zonal": "/zonal-report",
+      "schools-termly": "/schools-termly",
+      "aids-for-life": "/aids-for-life-report",
+      "leadership-training": "/leadership-training-report",
+      "valentine-program": "/valentine-report",
+      "student-rally": "/student-rally-report",
+      "tour": "/tour-report",
+      "trainings-meetings": "/trainings-meetings-report",
+      "family-week": "/family-week-report",
+      "children-day": "/children-day-report",
+      "missionary": "/missionary-report"
+    };
+
+    const targetRoute = routes[type || ""] || "/schools-youth";
+    router.push(`${targetRoute}?${query}`);
   };
 
   return (

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Week Report - SU Eleme</title>
+    <!-- Pointing up TWO levels to assets -->
+    <link rel="stylesheet" href="../../assets/style.css">
+    <style>
+        .accordion-day { background-color: #f1f8f1; color: #1b5e20; cursor: pointer; padding: 15px; width: 100%; border: 1px solid #c8e6c9; text-align: left; outline: none; font-size: 1.1rem; font-weight: bold; transition: 0.4s; border-radius: 6px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .accordion-day.active, .accordion-day:hover { background-color: #c8e6c9; }
+        .accordion-panel { padding: 20px; background-color: white; display: none; overflow: hidden; border: 1px solid #eaeaea; border-top: none; border-radius: 0 0 6px 6px; margin-bottom: 10px; }
+        .attendance-matrix th { background-color: #2e7d32; color: white; font-size: 0.85rem; text-transform: uppercase; }
+        .subtotal-row input { background-color: #e9ecef !important; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm">SU</div>
+                <span>Eleme Area</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../../dashboard.html">Home</a></li>
+                <li class="nav-label">Core Ministry Reports</li>
+                <li class="nav-item"><a href="../schools/schools-youth.html">Schools & Youth</a></li>
+                <li class="nav-item"><a href="../children/children-report.html">Children Report</a></li>
+                <li class="nav-item active"><a href="pilgrims-report.html">Pilgrims' Report</a></li>
+                <li class="nav-item"><a href="../../operational/camping-report.html">Camping Report</a></li>
+                
+                <li class="nav-label">Operational</li>
+                <li class="nav-item"><a href="../../operational/tour-report.html">Tour Report</a></li>
+                <li class="nav-item"><a href="../../operational/trainings-meetings.html">Trainings & Meetings</a></li>
+                
+                <li class="nav-label">Account</li>
+                <li class="nav-item"><a href="#" onclick="handleLogout()" style="color: #d32f2f;">🚪 Log Out</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <header class="top-bar">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                <div class="breadcrumb">Pilgrims Ministry / <strong>Family Week Report</strong></div>
+            </header>
+
+            <div class="mobile-overlay" onclick="toggleSidebar()"></div>
+
+            <div class="content-padding">
+                <div class="section-header">
+                    <h2>National Family Week Report</h2>
+                </div>
+
+                <form id="family-week-form">
+                    <div class="form-section-card">
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Group / Zone Identity</label>
+                                <input type="text" id="report-zone-display" class="dash-input readonly" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Generate 7 Accordions for Days (Shortened to Day 1 & 2 here to save space, but you keep all 7 from the previous exact code you generated) -->
+                    <button type="button" class="accordion-day" onclick="toggleAccordion(this)">Monday 18th May, 2026 <span>▼</span></button>
+                    <div class="accordion-panel">
+                        <div class="grid-2">
+                            <div class="form-group"><label>Major Activities Conducted</label><input type="text" class="dash-input"></div>
+                            <div class="form-group"><label>Speaker / Facilitator</label><input type="text" class="dash-input memory-input" list="saved-speakers" data-category="speakers"></div>
+                        </div>
+                        <div class="table-responsive"><table class="classic-table attendance-matrix" data-day="day1">
+                                <thead><tr><th>Demographic Category</th><th>Male (M)</th><th>Female (F)</th><th>Total (T)</th></tr></thead>
+                               <tbody>
+                                   <tr data-row="children"><td>Children</td><td><input type="number" class="table-input val-m" value="0" min="0" oninput="runFamilyWeekMath('day1')"></td><td><input type="number" class="table-input val-f" value="0" min="0" oninput="runFamilyWeekMath('day1')"></td><td><input type="number" class="table-input val-t" value="0" readonly></td></tr>
+                                   <tr data-row="youth"><td>Youth</td><td><input type="number" class="table-input val-m" value="0" min="0" oninput="runFamilyWeekMath('day1')"></td><td><input type="number" class="table-input val-f" value="0" min="0" oninput="runFamilyWeekMath('day1')"></td><td><input type="number" class="table-input val-t" value="0" readonly></td></tr>
+                                   <tr data-row="pilgrim"><td>Pilgrim</td><td><input type="number" class="table-input val-m" value="0" min="0" oninput="runFamilyWeekMath('day1')"></td><td><input type="number" class="table-input val-f" value="0" min="0" oninput="runFamilyWeekMath('day1')"></td><td><input type="number" class="table-input val-t" value="0" readonly></td></tr>
+                                   <tr class="subtotal-row" data-row="total"><td><strong>TOTAL ATTENDANCE</strong></td><td><input type="number" class="table-input total-m" value="0" readonly></td><td><input type="number" class="table-input total-f" value="0" readonly></td><td><input type="number" class="table-input total-grand" value="0" readonly></td></tr>
+                               </tbody>
+                        </table></div>
+                    </div>
+
+                    <datalist id="saved-speakers"></datalist>
+                    <div class="form-actions-sticky mt-20">
+                        <button type="submit" class="btn-primary-green">Submit Family Week Report</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script Pathways looking up into parent asset space -->
+    <script src="../../assets/app-scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const context = JSON.parse(sessionStorage.getItem('activeReportContext'));
+            if (context) {
+                document.getElementById('report-zone-display').value = `${context.zone} — (${context.group})`;
+            }
+        });
+
+        function toggleAccordion(buttonElement) {
+            buttonElement.classList.toggle("active");
+            const panel = buttonElement.nextElementSibling;
+            const indicator = buttonElement.querySelector('span');
+            if (panel.style.display === "block") { panel.style.display = "none"; indicator.innerText = "▼"; } 
+            else { panel.style.display = "block"; indicator.innerText = "▲"; }
+        }
+
+        function runFamilyWeekMath(dayId) {
+            const table = document.querySelector(`table[data-day="${dayId}"]`);
+            if (!table) return;
+            let totalM = 0; let totalF = 0;
+            const targetRows = ['children', 'youth', 'pilgrim'];
+            targetRows.forEach(rowType => {
+                const row = table.querySelector(`tr[data-row="${rowType}"]`);
+                const mVal = parseInt(row.querySelector('.val-m').value) || 0;
+                const fVal = parseInt(row.querySelector('.val-f').value) || 0;
+                row.querySelector('.val-t').value = mVal + fVal;
+                totalM += mVal; totalF += fVal;
+            });
+            table.querySelector('.total-m').value = totalM;
+            table.querySelector('.total-f').value = totalF;
+            table.querySelector('.total-grand').value = totalM + totalF;
+        }
+    </script>
+</body>
+</html>

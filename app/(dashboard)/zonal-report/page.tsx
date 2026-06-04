@@ -30,20 +30,20 @@ function ZonalReportContent() {
   };
 
   return (
-    <div className="flex-1 p-6 space-y-6 max-w-6xl mx-auto pb-24">
+    <div className="flex-1 p-4 md:p-6 space-y-6 max-w-6xl mx-auto pb-24">
       {/* Header */}
-      <div className="flex justify-between items-start border-b pb-6">
+      <div className="flex flex-col md:flex-row justify-between items-start gap-4 border-b pb-6">
         <div>
-          <h1 className="text-3xl font-bold text-primary">Zonal Progress Report</h1>
-          <p className="text-muted-foreground font-medium">Scripture Union Nigeria, Eleme Area</p>
+          <h1 className="text-2xl md:text-3xl font-black text-primary tracking-tight">Zonal Progress Report</h1>
+          <p className="text-muted-foreground text-sm font-medium">Scripture Union Nigeria, Eleme Area</p>
         </div>
-        <div className="text-right">
-          <div className="bg-primary/5 border border-primary/20 px-4 py-2 rounded-lg inline-block">
-            <span className="text-xs uppercase font-bold text-primary tracking-widest block mb-1">Administrative Context</span>
-            <div className="flex items-center gap-3 text-sm font-semibold">
-              <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" />{zone}</span>
-              <span className="w-px h-3 bg-primary/20"></span>
-              <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" />{period} {year}</span>
+        <div className="w-full md:w-auto text-left md:text-right">
+          <div className="bg-primary/5 border border-primary/20 px-4 py-2 rounded-lg inline-block w-full md:w-auto">
+            <span className="text-[10px] uppercase font-bold text-primary tracking-widest block mb-1 opacity-70">Report Context</span>
+            <div className="flex items-center gap-3 text-sm font-bold text-gray-700">
+              <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-primary" />{zone}</span>
+              <span className="w-px h-3 bg-gray-300"></span>
+              <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-primary" />{period} {year}</span>
             </div>
           </div>
         </div>
@@ -119,55 +119,55 @@ function ZonalReportContent() {
             {/* General/Adult */}
             <div>
               <h4 className="text-sm font-bold text-primary mb-4 p-2 bg-muted/30 rounded">General & Adult Ministry</h4>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[200px]">Programme</TableHead>
-                    <TableHead>Attendance</TableHead>
-                    <TableHead>Decisions</TableHead>
-                    <TableHead>Cost (₦)</TableHead>
-                    <TableHead>Remark</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {["Easter Pilgrims' Conf.", "SU Week of Sacrifice", "Prayer & Gift Day", "Mission Week"].map(prog => (
-                    <TableRow key={prog}>
-                      <TableCell className="font-medium text-xs">{prog}</TableCell>
-                      <TableCell><Input className="h-8" /></TableCell>
-                      <TableCell><Input className="h-8" type="number" /></TableCell>
-                      <TableCell><Input className="h-8" type="number" /></TableCell>
-                      <TableCell><Input className="h-8" /></TableCell>
+              <div className="overflow-x-auto -mx-2 md:mx-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[180px] text-[10px] uppercase font-bold">Programme</TableHead>
+                      <TableHead className="text-[10px] uppercase font-bold">Attendance</TableHead>
+                      <TableHead className="text-[10px] uppercase font-bold">Decisions</TableHead>
+                      <TableHead className="text-[10px] uppercase font-bold">Cost (₦)</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {["Easter Pilgrims' Conf.", "SU Week of Sacrifice", "Prayer & Gift Day", "Mission Week"].map(prog => (
+                      <TableRow key={prog}>
+                        <TableCell className="font-bold text-[11px]">{prog}</TableCell>
+                        <TableCell><Input className="h-9 text-xs" /></TableCell>
+                        <TableCell><Input className="h-9 text-xs" type="number" /></TableCell>
+                        <TableCell><Input className="h-9 text-xs" type="number" /></TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </div>
 
             {/* Schools/Youth */}
             <div>
               <h4 className="text-sm font-bold text-primary mb-4 p-2 bg-muted/30 rounded">Schools & Youth Ministry</h4>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[200px]">Programme</TableHead>
-                    <TableHead>Attendance</TableHead>
-                    <TableHead>Decisions</TableHead>
-                    <TableHead>Cost (₦)</TableHead>
-                    <TableHead>Remark</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {["Zonal Schools' Rally", "Student Leaders Training", "BRP (Bible Reading)", "Valentine's Day"].map(prog => (
-                    <TableRow key={prog}>
-                      <TableCell className="font-medium text-xs">{prog}</TableCell>
-                      <TableCell><Input className="h-8" /></TableCell>
-                      <TableCell><Input className="h-8" type="number" /></TableCell>
-                      <TableCell><Input className="h-8" type="number" /></TableCell>
-                      <TableCell><Input className="h-8" /></TableCell>
+              <div className="overflow-x-auto -mx-2 md:mx-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[180px] text-[10px] uppercase font-bold">Programme</TableHead>
+                      <TableHead className="text-[10px] uppercase font-bold">Attendance</TableHead>
+                      <TableHead className="text-[10px] uppercase font-bold">Decisions</TableHead>
+                      <TableHead className="text-[10px] uppercase font-bold">Cost (₦)</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {["Zonal Schools' Rally", "Student Leaders Training", "BRP (Bible Reading)", "Valentine's Day"].map(prog => (
+                      <TableRow key={prog}>
+                        <TableCell className="font-bold text-[11px]">{prog}</TableCell>
+                        <TableCell><Input className="h-9 text-xs" /></TableCell>
+                        <TableCell><Input className="h-9 text-xs" type="number" /></TableCell>
+                        <TableCell><Input className="h-9 text-xs" type="number" /></TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -187,8 +187,9 @@ function ZonalReportContent() {
         </Card>
 
         {/* Action Button */}
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur border-t z-10 flex justify-center shadow-lg md:ml-64">
-           <Button type="submit" className="w-full max-w-sm h-12 text-lg font-bold shadow-xl" disabled={isSubmitting}>
+        {/* Action Button */}
+        <div className="fixed bottom-0 left-0 lg:left-64 right-0 p-4 bg-white/90 backdrop-blur-md border-t border-gray-200 shadow-lg flex justify-center z-50">
+           <Button type="submit" className="w-full max-w-md h-12 text-lg font-black bg-primary hover:bg-primary/90 shadow-xl uppercase tracking-widest" disabled={isSubmitting}>
              {isSubmitting ? "Submitting..." : (
                <>
                  <Send className="w-5 h-5 mr-3" /> Submit Final Zonal Report

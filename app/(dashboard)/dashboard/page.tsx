@@ -64,10 +64,10 @@ export default function DashboardPage() {
   }, [role, userId]);
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-1 mb-8">
-        <h2 className="text-2xl font-bold text-[#1b5e20]">General Statistics</h2>
-        <p className="text-gray-500 text-sm font-medium">Overview of ministry impact and reporting status for 2026</p>
+    <div className="space-y-6 md:space-y-8">
+      <div className="flex flex-col gap-1 mb-4 md:mb-8">
+        <h2 className="text-xl md:text-2xl font-bold text-[#1b5e20]">General Statistics</h2>
+        <p className="text-gray-500 text-xs md:text-sm font-medium">Overview of ministry impact and reporting status for 2026</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -115,36 +115,36 @@ export default function DashboardPage() {
       </div>
       
       <div className="flex flex-col lg:flex-row gap-6 mt-8">
-        <div className="flex-[2] bg-white rounded-lg shadow-[0_2px_10px_rgb(0,0,0,0.04)] border border-gray-100 p-6 overflow-x-auto">
+        <div className="flex-[2] bg-white rounded-lg shadow-[0_2px_10px_rgb(0,0,0,0.04)] border border-gray-100 p-4 md:p-6 overflow-hidden">
           <h3 className="text-[#1b5e20] text-lg font-bold border-b border-gray-100 pb-3 mb-4">Recent Submissions</h3>
-          <table className="w-full text-left border-collapse min-w-[500px]">
-            <thead>
-              <tr>
-                <th className="p-3 bg-[#fffdf7] text-gray-700 font-bold text-sm border-b-2 border-[#1b5e20]/20 rounded-tl-md">Report Type</th>
-                <th className="p-3 bg-[#fffdf7] text-gray-700 font-bold text-sm border-b-2 border-[#1b5e20]/20">Submitted By</th>
-                <th className="p-3 bg-[#fffdf7] text-gray-700 font-bold text-sm border-b-2 border-[#1b5e20]/20">Status</th>
-                <th className="p-3 bg-[#fffdf7] text-gray-700 font-bold text-sm border-b-2 border-[#1b5e20]/20 rounded-tr-md">Decisions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentReports.length === 0 ? (
-                <tr><td colSpan={4} className="p-6 text-center text-gray-400 italic">No reports submitted yet.</td></tr>
-              ) : (
-                recentReports.map((report) => (
-                  <tr key={report.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                    <td className="p-3 text-sm font-bold text-gray-800">{report.reportType}</td>
-                    <td className="p-3 text-sm text-gray-600">{report.userName}</td>
-                    <td className="p-3">
-                      <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-tighter ${report.status === 'approved' ? 'bg-[#1b5e20]/10 text-[#1b5e20]' : 'bg-yellow-100 text-yellow-700'}`}>
-                        {report.status}
-                      </span>
-                    </td>
-                    <td className="p-3 text-sm font-bold text-[#1b5e20]">{report.decisions || 0}</td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+          <div className="overflow-x-auto -mx-4 md:mx-0">
+            <table className="w-full text-left border-collapse min-w-[450px]">
+              <thead>
+                <tr>
+                  <th className="p-3 bg-[#fffdf7] text-gray-700 font-bold text-xs uppercase border-b-2 border-[#1b5e20]/20">Report Type</th>
+                  <th className="p-3 bg-[#fffdf7] text-gray-700 font-bold text-xs uppercase border-b-2 border-[#1b5e20]/20">Submitted By</th>
+                  <th className="p-3 bg-[#fffdf7] text-gray-700 font-bold text-xs uppercase border-b-2 border-[#1b5e20]/20">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentReports.length === 0 ? (
+                  <tr><td colSpan={3} className="p-6 text-center text-gray-400 italic text-sm">No reports submitted yet.</td></tr>
+                ) : (
+                  recentReports.map((report) => (
+                    <tr key={report.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                      <td className="p-3 text-xs md:text-sm font-bold text-gray-800">{report.reportType}</td>
+                      <td className="p-3 text-xs md:text-sm text-gray-600">{report.userName}</td>
+                      <td className="p-3">
+                        <span className={`text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter ${report.status === 'approved' ? 'bg-[#1b5e20]/10 text-[#1b5e20]' : 'bg-yellow-100 text-yellow-700'}`}>
+                          {report.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div className="flex-1 bg-white rounded-lg shadow-[0_2px_10px_rgb(0,0,0,0.04)] border border-gray-100 p-6 flex flex-col gap-3">

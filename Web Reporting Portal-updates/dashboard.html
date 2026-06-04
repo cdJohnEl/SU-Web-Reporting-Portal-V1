@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SU Eleme Reporting Portal</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="bg-pattern">
+
+    <div class="dashboard-wrapper">
+        <!-- Universal Sidebar for Root Level -->
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-placeholder-sm">SU</div>
+                <span>Eleme Area</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item active"><a href="dashboard.html">Home</a></li>
+                <li class="nav-label">Core Ministry Reports</li>
+                <li class="nav-item"><a href="ministry/schools/schools-youth.html">Schools & Youth Report</a></li>
+                <li class="nav-item"><a href="ministry/children/children-report.html">Children Report</a></li>
+                <li class="nav-item"><a href="ministry/pilgrims/pilgrims-report.html">Pilgrims' Report</a></li>
+                <li class="nav-item"><a href="operational/camping-report.html">Camping Report</a></li>
+                
+                <li class="nav-label">Operational</li>
+                <li class="nav-item"><a href="operational/tour-report.html">Tour Report</a></li>
+                <li class="nav-item"><a href="operational/trainings-meetings.html">Trainings & Meetings</a></li>
+                
+                <li class="nav-label">Account</li>
+                <li class="nav-item"><a href="#" onclick="handleLogout()" style="color: #d32f2f;">🚪 Log Out</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-workspace">
+            <header class="top-bar">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                
+                <div class="breadcrumb">
+                    Dashboard / <strong>Home</strong>
+                </div>
+                
+                <div class="user-profile">
+                    <span class="user-name-text"><strong>User Name</strong></span>
+                    <div class="profile-circle">UN</div>
+                </div>
+            </header>
+
+            <div class="mobile-overlay" onclick="toggleSidebar()"></div>
+            
+            <div class="content-padding">
+                <div class="dashboard-header">
+                    <h2>General Statistics</h2>
+                    <p>Overview of ministry impact and reporting status for 2026</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card gold-border">
+                        <h3>Total Schools Reached</h3>
+                        <div class="stat-value">124</div>
+                        <span class="stat-change">+12% from last year</span>
+                    </div>
+                    <div class="stat-card green-border">
+                        <h3>Total Decisions</h3>
+                        <div class="stat-value">1,042</div>
+                        <span class="stat-change">Across all zones</span>
+                    </div>
+                    <div class="stat-card green-border">
+                        <h3>Active Missionaries</h3>
+                        <div class="stat-value">18</div>
+                        <span class="stat-change">Currently on field</span>
+                    </div>
+                    <div class="stat-card blue-border">
+                        <h3>Report Progress</h3>
+                        <div class="stat-value">75%</div>
+                        <div class="mini-progress"><div class="fill" style="width: 75%"></div></div>
+                    </div>
+                    <div class="stat-card green-border">
+                        <h3>Submitted Report</h3>
+                        <div class="stat-value">14</div>
+                        <span class="stat-change">Across all zones</span>
+                    </div>
+                    <div class="stat-card gold-border">
+                        <h3>Pending Reviews</h3>
+                        <div class="stat-value">04</div>
+                        <span class="stat-change">From last quarter</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-row">
+                    <div class="data-table-container">
+                        <h3>Recent Submissions</h3>
+                        <table class="classic-table">
+                            <thead>
+                                <tr>
+                                    <th>Report Type</th>
+                                    <th>Zone</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Camping Report</td>
+                                    <td>Nchia</td>
+                                    <td>April 12, 2026</td>
+                                    <td><span class="badge badge-green">Approved</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Tour Report</td>
+                                    <td>Gokana</td>
+                                    <td>April 15, 2026</td>
+                                    <td><span class="badge badge-yellow">Pending</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="action-panel">
+                        <h3>Quick Actions</h3>
+                        <button class="action-btn">Generate Area Summary</button>
+                        <button class="action-btn outline">Export Reading Note Data</button>
+                        <button class="action-btn outline">View Audit Logs</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="assets/app-scripts.js"></script>
+</body>
+</html>
