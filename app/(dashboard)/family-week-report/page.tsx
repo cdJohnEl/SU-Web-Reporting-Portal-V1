@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, Suspense, useEffect } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ChevronDown, ChevronUp, Send, MapPin, Calendar, Info, Users, Save } from "lucide-react";
+import { ChevronDown, ChevronUp, Send, MapPin, Calendar, Users, RefreshCw } from "lucide-react";
 import { db, auth } from "@/lib/firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
@@ -18,7 +17,7 @@ type DemographicRow = {
 };
 
 type DayReport = {
-  dayName: string;
+  dayLabel: string;
   activities: string;
   speaker: string;
   metrics: {
@@ -31,20 +30,31 @@ type DayReport = {
   dayGrandTotal: number;
 };
 
+const DAY_LABELS = [
+  "Monday 18th May, 2026",
+  "Tuesday 19th May, 2026",
+  "Wednesday 20th May, 2026",
+  "Thursday 21st May, 2026",
+  "Friday 22nd May, 2026",
+  "Saturday 23rd May, 2026",
+  "Sunday 24th May, 2026",
+];
+
 function FamilyWeekReportContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  
+
   const zone = searchParams.get("zone") || "Not Specified";
   const year = searchParams.get("year") || new Date().getFullYear().toString();
   const period = searchParams.get("period") || "Not Specified";
+  const group = searchParams.get("group") || "Not Specified";
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [expandedDay, setExpandedDay] = useState<number | null>(0);
-  
+
   const [days, setDays] = useState<DayReport[]>(
-    ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(day => ({
-      dayName: day,
+    DAY_LABELS.map(label => ({
+      dayLabel: label,
       activities: "",
       speaker: "",
       metrics: {
@@ -62,18 +72,14 @@ function FamilyWeekReportContent() {
     const num = parseInt(val) || 0;
     const newDays = [...days];
     const day = newDays[dayIdx];
-    
-    // Update raw value
+
     day.metrics[cat][gender] = num;
-    
-    // Update row total
     day.metrics[cat].total = day.metrics[cat].male + day.metrics[cat].female;
-    
-    // Update day subtotals
+
     day.dayTotalM = day.metrics.children.male + day.metrics.youth.male + day.metrics.pilgrim.male;
     day.dayTotalF = day.metrics.children.female + day.metrics.youth.female + day.metrics.pilgrim.female;
     day.dayGrandTotal = day.dayTotalM + day.dayTotalF;
-    
+
     setDays(newDays);
   };
 
@@ -95,6 +101,7 @@ function FamilyWeekReportContent() {
         zone,
         year,
         period,
+        group,
         data: { days },
         status: "submitted",
         createdAt: serverTimestamp(),
@@ -113,8 +120,7 @@ function FamilyWeekReportContent() {
     <div className="flex-1 p-4 md:p-6 space-y-6 max-w-6xl mx-auto pb-24 font-sans">
       <div className="flex flex-col md:flex-row justify-between items-start gap-4 border-b pb-6 border-gray-100">
         <div>
-          <h1 className="text-2xl md:text-3xl font-black text-[#1b5e20] tracking-tight italic">National Family Week</h1>
-          <p className="text-gray-500 font-medium text-sm md:text-base">Zonal reporting for family seminars, fellowship events, and demographic impact.</p>
+          <h1 className="text-2xl md:text-3xl font-black text-[#1b5e20] tracking-tight">National Family Week Report</h1>
         </div>
         <div className="w-full md:w-auto text-left md:text-right">
            <div className="bg-[#1b5e20]/5 border border-[#1b5e20]/20 px-4 py-2 rounded-lg inline-block w-full md:w-auto">
@@ -128,10 +134,15 @@ function FamilyWeekReportContent() {
         </div>
       </div>
 
+      <div className="border rounded-xl bg-white shadow-sm p-4 md:p-5 space-y-2">
+        <Label className="text-[10px] uppercase font-bold text-gray-500 tracking-wider">Group / Zone Identity</Label>
+        <Input value={`${zone} — (${group})`} readOnly className="h-11 border-gray-100 bg-muted cursor-not-allowed font-medium" />
+      </div>
+
       <div className="space-y-3">
         {days.map((day, dIdx) => (
           <div key={dIdx} className="overflow-hidden border rounded-xl bg-white shadow-sm transition-all hover:border-[#1b5e20]/30">
-            <button 
+            <button
               onClick={() => setExpandedDay(expandedDay === dIdx ? null : dIdx)}
               className={`w-full flex items-center justify-between p-4 md:p-5 text-left transition-colors ${expandedDay === dIdx ? 'bg-[#1b5e20]/5 text-[#1b5e20]' : 'text-gray-700 hover:bg-gray-50'}`}
             >
@@ -140,9 +151,9 @@ function FamilyWeekReportContent() {
                   {dIdx + 1}
                 </div>
                 <div>
-                  <h3 className="font-bold text-base md:text-lg">{day.dayName} Log</h3>
+                  <h3 className="font-bold text-base md:text-lg">{day.dayLabel}</h3>
                   <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60">
-                    {day.activities ? "Record Active" : "No Data Yet"} • Impact: {day.dayGrandTotal}
+                    {day.activities ? "Record Active" : "No Data Yet"} • Total: {day.dayGrandTotal}
                   </p>
                 </div>
               </div>
@@ -153,9 +164,8 @@ function FamilyWeekReportContent() {
               <div className="p-4 md:p-6 border-t border-gray-100 animate-in fade-in slide-in-from-top-2 duration-300">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
                   <div className="space-y-2">
-                    <Label className="text-xs font-bold uppercase text-gray-500 tracking-wider">Major Activities Conducted</Label>
-                    <Input 
-                      placeholder="e.g. Family Seminar, Bible Study" 
+                    <Label className="text-xs font-bold uppercase text-gray-500 tracking-wider">Major Activities</Label>
+                    <Input
                       value={day.activities}
                       onChange={(e) => updateDayField(dIdx, "activities", e.target.value)}
                       className="border-gray-200 focus:ring-[#1b5e20]"
@@ -163,8 +173,7 @@ function FamilyWeekReportContent() {
                   </div>
                   <div className="space-y-2">
                     <Label className="text-xs font-bold uppercase text-gray-500 tracking-wider">Speaker / Facilitator</Label>
-                    <Input 
-                      placeholder="Name of facilitator" 
+                    <Input
                       value={day.speaker}
                       onChange={(e) => updateDayField(dIdx, "speaker", e.target.value)}
                       className="border-gray-200 focus:ring-[#1b5e20]"
@@ -177,15 +186,15 @@ function FamilyWeekReportContent() {
                     <Users className="w-4 h-4 text-[#1b5e20]" />
                     <h4 className="font-extrabold text-[#1b5e20] text-[10px] md:text-xs uppercase tracking-[0.2em]">Demographic Attendance Matrix</h4>
                   </div>
-                  
+
                   <div className="overflow-x-auto -mx-4 md:mx-0">
                     <Table>
                       <TableHeader>
                         <TableRow className="hover:bg-transparent border-none">
-                          <TableHead className="w-[150px] text-[10px] uppercase font-black text-gray-400 pl-4 md:pl-0">Category</TableHead>
+                          <TableHead className="w-[150px] text-[10px] uppercase font-black text-gray-400 pl-4 md:pl-0">Demographic Category</TableHead>
                           <TableHead className="text-center text-[10px] uppercase font-black text-gray-400">Male (M)</TableHead>
                           <TableHead className="text-center text-[10px] uppercase font-black text-gray-400">Female (F)</TableHead>
-                          <TableHead className="text-center text-[10px] uppercase font-black text-gray-400 pr-4 md:pr-0">Total</TableHead>
+                          <TableHead className="text-center text-[10px] uppercase font-black text-gray-400 pr-4 md:pr-0">Total (T)</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -193,8 +202,8 @@ function FamilyWeekReportContent() {
                           <TableRow key={cat} className="hover:bg-transparent">
                             <TableCell className="font-bold text-gray-700 capitalize pl-4 md:pl-0">{cat}</TableCell>
                             <TableCell className="text-center p-2">
-                              <Input 
-                                type="number" 
+                              <Input
+                                type="number"
                                 min="0"
                                 value={day.metrics[cat].male || ""}
                                 onChange={(e) => updateMetric(dIdx, cat, "male", e.target.value)}
@@ -202,8 +211,8 @@ function FamilyWeekReportContent() {
                               />
                             </TableCell>
                             <TableCell className="text-center p-2">
-                              <Input 
-                                type="number" 
+                              <Input
+                                type="number"
                                 min="0"
                                 value={day.metrics[cat].female || ""}
                                 onChange={(e) => updateMetric(dIdx, cat, "female", e.target.value)}
@@ -216,7 +225,7 @@ function FamilyWeekReportContent() {
                           </TableRow>
                         ))}
                         <TableRow className="bg-[#1b5e20]/5 font-black border-t-2 border-[#1b5e20]/20">
-                          <TableCell className="pl-4 md:pl-4">DAILY TOTAL</TableCell>
+                          <TableCell className="pl-4 md:pl-4">TOTAL</TableCell>
                           <TableCell className="text-center">{day.dayTotalM}</TableCell>
                           <TableCell className="text-center">{day.dayTotalF}</TableCell>
                           <TableCell className="text-center text-[#1b5e20] pr-4 md:pr-4">{day.dayGrandTotal}</TableCell>
@@ -232,12 +241,13 @@ function FamilyWeekReportContent() {
       </div>
 
       <div className="fixed bottom-0 left-0 lg:left-64 right-0 p-4 bg-white/90 backdrop-blur-md border-t border-gray-200 shadow-lg flex justify-center z-50">
-        <Button 
+        <Button
           onClick={onSubmit}
-          disabled={isSubmitting} 
+          disabled={isSubmitting}
           className="w-full max-w-md h-12 text-lg font-black bg-[#1b5e20] hover:bg-[#2e7d32] shadow-xl uppercase tracking-widest"
         >
-          {isSubmitting ? "Submitting..." : <><Send className="w-5 h-5 mr-3" /> Submit Family Week Report</>}
+          {isSubmitting ? <RefreshCw className="mr-3 animate-spin"/> : <Send className="w-5 h-5 mr-3" />}
+          {isSubmitting ? "Submitting..." : "Submit Family Week Report"}
         </Button>
       </div>
     </div>

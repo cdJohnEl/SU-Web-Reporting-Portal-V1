@@ -1,298 +1,378 @@
 "use client";
 
 import { useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Save, Send, Calendar, MapPin, Building2, User } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { db, auth } from "@/lib/firebase";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import {
+  Send, Users, BookOpen, GraduationCap,
+  Tent, TrendingUp, MessageSquare,
+  MapPin, Calendar, ClipboardCheck, RefreshCw
+} from "lucide-react";
 
-function SchoolsTermlyReportContent() {
+function TermlyReportContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   
-  // Metadata from initialization
   const zone = searchParams.get("zone") || "Not Specified";
   const year = searchParams.get("year") || new Date().getFullYear().toString();
   const period = searchParams.get("period") || "Not Specified";
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activeTab, setActiveTab] = useState("general");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Mock submission
-    setTimeout(() => {
-      alert("Report submitted successfully!");
-      setIsSubmitting(false);
-    }, 1500);
+  const [form, setForm] = useState({
+    // 1. General Stats
+    missionaries: { fullTime: 0, associate: 0, total: 0 },
+    catchment: { secondary: 0, primary: 0, total: 0 },
+    schools: { secondaryReached: 0, primaryReached: 0, totalReached: 0 },
+    literature: { guide: 0, power: 0, search: 0, others: 0 },
+    // 2. Trainings
+    trainings: {
+      christianTeachers: { count: 0, venue: "" },
+      schoolVisitors: { count: 0, venue: "" },
+      campOfficers: { count: 0, venue: "" },
+      vocational: { count: 0, venue: "" }
+    },
+    // 3. Programmes
+    programmes: {
+      schoolsRally: { count: 0, converts: 0 },
+      primaryRally: { count: 0, converts: 0 },
+      schoolLeavers: { count: 0, converts: 0 },
+      valentine: { count: 0, converts: 0 }
+    },
+    // 4. Holiday Camps
+    camps: {
+      studentHoliday: { count: 0, converts: 0, venue: "" },
+      childrenHoliday: { count: 0, converts: 0, venue: "" }
+    },
+    // 5. Final
+    plans: "",
+    personnel: "",
+    budget: 0,
+    recommendations: ""
+  });
+
+  const updateNested = (category: string, field: string, value: any) => {
+    setForm(prev => ({
+      ...prev,
+      [category]: {
+        ...(prev as any)[category],
+        [field]: value
+      }
+    }));
   };
 
+  const onSubmit = async () => {
+    if (!auth.currentUser) return alert("Session expired.");
+    setIsSubmitting(true);
+    try {
+      const reportId = `termly_${auth.currentUser.uid}_${Date.now()}`;
+      await setDoc(doc(db, "reports", reportId), {
+        uid: auth.currentUser.uid,
+        userName: auth.currentUser.displayName || "User",
+        reportType: "Zonal (Termly) Schools Report",
+        zone, year, period,
+        data: form,
+        status: "submitted",
+        createdAt: serverTimestamp(),
+        submittedAt: serverTimestamp(),
+      });
+      alert("Termly Report submitted successfully!");
+      router.push("/dashboard");
+    } catch (e: any) {
+      alert("Error: " + e.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const sectionLabel = "text-[10px] uppercase font-black tracking-[0.2em] text-[#1b5e20] mb-6 flex items-center gap-2";
+  const statCardClass = "p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:border-[#1b5e20]/20 transition-all group";
+  const statLabelClass = "text-[10px] font-bold text-gray-400 uppercase mb-2 block group-hover:text-[#1b5e20] transition-colors";
+
   return (
-    <div className="flex-1 p-4 md:p-6 space-y-6 max-w-6xl mx-auto pb-24">
-      {/* Header Info */}
-      <Card className="border-l-4 border-l-primary shadow-sm bg-white">
-        <CardContent className="pt-6">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div>
-              <h1 className="text-xl md:text-2xl font-bold text-primary flex items-center gap-2">
-                Zonal Termly Report: Schools Dept
-              </h1>
-              <p className="text-muted-foreground text-xs md:text-sm">Scripture Union Nigeria, Eleme Area</p>
-            </div>
-            <div className="flex flex-wrap gap-2 md:gap-4 text-[10px] md:text-sm bg-muted/30 md:bg-muted/50 p-2 md:p-3 rounded-lg border w-full md:w-auto">
-              <div className="flex items-center gap-1.5 md:gap-2">
-                <MapPin className="w-3.5 h-3.5 text-primary" />
-                <span className="font-semibold">{zone} Zone</span>
-              </div>
-              <div className="flex items-center gap-1.5 md:gap-2 border-l pl-2 md:border-none md:pl-0">
-                <Calendar className="w-3.5 h-3.5 text-primary" />
-                <span className="font-semibold">{period} {year}</span>
-              </div>
-              <div className="hidden sm:flex items-center gap-1.5 md:gap-2">
-                <User className="w-3.5 h-3.5 text-primary" />
-                <span className="font-semibold italic">Zonal Schools Coordinator</span>
-              </div>
-            </div>
+    <div className="flex-1 p-4 md:p-6 space-y-8 max-w-[1200px] mx-auto pb-32">
+      {/* Dynamic Header */}
+      <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-10 border-b pb-8 border-gray-100">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-[#1b5e20] mb-1">
+            <ClipboardCheck className="w-5 h-5" />
+            <span className="text-[10px] uppercase font-black tracking-widest opacity-70">Reporting / Zonal Termly Report: Schools Dept</span>
           </div>
-        </CardContent>
-      </Card>
-
-      <form onSubmit={handleSubmit}>
-        <Tabs defaultValue="general" className="w-full">
-          <div className="overflow-x-auto pb-2 -mx-1">
-            <TabsList className="flex w-max md:w-full min-w-full md:grid md:grid-cols-5 h-auto p-1 bg-muted/30 border">
-              <TabsTrigger value="general" className="py-2 px-4 md:px-0">General Stats</TabsTrigger>
-              <TabsTrigger value="trainings" className="py-2 px-4 md:px-0">Trainings</TabsTrigger>
-              <TabsTrigger value="programmes" className="py-2 px-4 md:px-0">Programmes</TabsTrigger>
-              <TabsTrigger value="camps" className="py-2 px-4 md:px-0">Holiday Camps</TabsTrigger>
-              <TabsTrigger value="final" className="py-2 px-4 md:px-0">Final Sections</TabsTrigger>
-            </TabsList>
-          </div>
-
-          <Card className="mt-4 shadow-sm border-none bg-transparent">
-            {/* General Stats Tab */}
-            <TabsContent value="general">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg text-primary uppercase tracking-tight">I. Preamble & II. General Statistics</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="preamble">Preamble</Label>
-                    <Textarea id="preamble" rows={3} placeholder="Brief overview of the term..." />
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-4 p-4 bg-muted/20 rounded-lg border">
-                      <div className="grid grid-cols-2 items-center gap-4">
-                        <Label>No. of Missionaries</Label>
-                        <Input type="number" defaultValue="0" />
-                      </div>
-                      <div className="grid grid-cols-2 items-center gap-4">
-                        <Label>Schools (Primary)</Label>
-                        <Input type="number" defaultValue="0" />
-                      </div>
-                      <div className="grid grid-cols-2 items-center gap-4">
-                        <Label>Schools (Secondary)</Label>
-                        <Input type="number" defaultValue="0" />
-                      </div>
-                      <div className="grid grid-cols-2 items-center gap-4">
-                        <Label>Total Group Membership</Label>
-                        <Input type="number" defaultValue="0" />
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-4 p-4 bg-muted/20 rounded-lg border">
-                      <div className="grid grid-cols-2 items-center gap-4">
-                        <Label>No. of School Visitors</Label>
-                        <Input type="number" defaultValue="0" />
-                      </div>
-                      <div className="grid grid-cols-2 items-center gap-4">
-                        <Label>No. of Schools Visited</Label>
-                        <Input type="number" defaultValue="0" />
-                      </div>
-                      <div className="grid grid-cols-2 items-center gap-4">
-                        <Label>New Groups Opened</Label>
-                        <Input type="number" defaultValue="0" />
-                      </div>
-                      <div className="grid grid-cols-2 items-center gap-4">
-                        <Label>SBSO Distributed</Label>
-                        <Input type="number" defaultValue="0" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-4">
-                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-4 border-b pb-2">Follow Up Details</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="space-y-2">
-                        <Label>Manuals Sold</Label>
-                        <Input type="number" defaultValue="0" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label>Converts in Follow-Up</Label>
-                        <Input type="number" defaultValue="0" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label>Completed Follow-Up</Label>
-                        <Input type="number" defaultValue="0" />
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* Trainings Tab */}
-            <TabsContent value="trainings">
-              <div className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg text-primary uppercase">III. Student Leaders Training</CardTitle>
-                  </CardHeader>
-                  <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="space-y-2"><Label>Period Held</Label><Input type="text" /></div>
-                    <div className="space-y-2"><Label>No. of Schools</Label><Input type="number" defaultValue="0" /></div>
-                    <div className="space-y-2"><Label>Attendance</Label><Input type="number" defaultValue="0" /></div>
-                    <div className="space-y-2"><Label>New Leaders Trained</Label><Input type="number" defaultValue="0" /></div>
-                    <div className="space-y-2"><Label>Total Cost (₦)</Label><Input type="number" defaultValue="0" /></div>
-                  </CardContent>
-                </Card>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card>
-                    <CardHeader><CardTitle className="text-base">Christian Teacher's Seminar</CardTitle></CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="grid grid-cols-2 items-center gap-2"><Label>Attendance</Label><Input type="number" defaultValue="0" /></div>
-                      <div className="grid grid-cols-2 items-center gap-2"><Label>No. of Schools</Label><Input type="number" defaultValue="0" /></div>
-                      <div className="grid grid-cols-2 items-center gap-2"><Label>Total Cost</Label><Input type="number" defaultValue="0" /></div>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader><CardTitle className="text-base">School Visitors Training</CardTitle></CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="grid grid-cols-2 items-center gap-2"><Label>Visitors Trained</Label><Input type="number" defaultValue="0" /></div>
-                      <div className="grid grid-cols-2 items-center gap-2"><Label>New Volunteers</Label><Input type="number" defaultValue="0" /></div>
-                      <div className="grid grid-cols-2 items-center gap-2"><Label>Total Cost</Label><Input type="number" defaultValue="0" /></div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-            </TabsContent>
-
-            {/* Programmes Tab */}
-            <TabsContent value="programmes">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg text-primary uppercase">IV. Programmes Held</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="border rounded-lg overflow-hidden">
-                    <Table>
-                      <TableHeader className="bg-muted">
-                        <TableRow>
-                          <TableHead>Programme</TableHead>
-                          <TableHead>Units</TableHead>
-                          <TableHead>Schools</TableHead>
-                          <TableHead>Attendance</TableHead>
-                          <TableHead>Converts</TableHead>
-                          <TableHead>Cost (₦)</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {["Schools Rally", "Primary Rally", "Leavers Workshop", "Valentine's Day"].map((prog) => (
-                          <TableRow key={prog}>
-                            <TableCell className="font-medium">{prog}</TableCell>
-                            <TableCell><Input className="w-20" type="number" defaultValue={0} /></TableCell>
-                            <TableCell><Input className="w-20" type="number" defaultValue={0} /></TableCell>
-                            <TableCell><Input className="w-20" type="number" defaultValue={0} /></TableCell>
-                            <TableCell><Input className="w-20" type="number" defaultValue={0} /></TableCell>
-                            <TableCell><Input className="w-28" type="number" defaultValue={0} /></TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* Holiday Camps Tab */}
-            <TabsContent value="camps">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card className="border-t-4 border-t-su-green">
-                  <CardHeader><CardTitle className="text-lg underline underline-offset-4">Students Holiday Camp</CardTitle></CardHeader>
-                  <CardContent className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2"><Label>Total Students</Label><Input type="number" defaultValue={0} /></div>
-                    <div className="space-y-2"><Label>Senior Students</Label><Input type="number" defaultValue={0} /></div>
-                    <div className="space-y-2"><Label>Junior Students</Label><Input type="number" defaultValue={0} /></div>
-                    <div className="space-y-2"><Label>School Leavers</Label><Input type="number" defaultValue={0} /></div>
-                    <div className="space-y-2"><Label>Converts</Label><Input type="number" defaultValue={0} /></div>
-                    <div className="space-y-2"><Label>Expenditure</Label><Input type="number" defaultValue={0} /></div>
-                  </CardContent>
-                </Card>
-                <Card className="border-t-4 border-t-[#c39b3d]">
-                  <CardHeader><CardTitle className="text-lg underline underline-offset-4">Children Holiday Camp</CardTitle></CardHeader>
-                  <CardContent className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2"><Label>Total Children</Label><Input type="number" defaultValue={0} /></div>
-                    <div className="space-y-2"><Label>Teachers</Label><Input type="number" defaultValue={0} /></div>
-                    <div className="space-y-2"><Label>Converts</Label><Input type="number" defaultValue={0} /></div>
-                    <div className="space-y-2"><Label>Total Cost</Label><Input type="number" defaultValue={0} /></div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
-            {/* Final Tab */}
-            <TabsContent value="final">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader><CardTitle className="text-lg text-primary uppercase">V. Plans & VI. Budget</CardTitle></CardHeader>
-                  <CardContent className="space-y-4">
-                    <Textarea rows={6} placeholder="Next term plans..." />
-                    <div className="flex items-center gap-3 bg-muted/30 p-4 rounded-lg">
-                      <Label className="font-bold">Projected Budget Total:</Label>
-                      <Input type="number" className="max-w-[200px]" defaultValue="0" />
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader><CardTitle className="text-lg text-primary uppercase">VII. Recommendation</CardTitle></CardHeader>
-                  <CardContent>
-                    <Textarea rows={10} placeholder="Your recommendations..." />
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-          </Card>
-        </Tabs>
-
-        {/* Form Actions */}
-        <div className="fixed bottom-0 left-0 lg:left-64 right-0 p-4 bg-white/90 backdrop-blur-md border-t border-gray-200 shadow-lg flex justify-center gap-3 z-50">
-          <Button type="button" variant="outline" className="hidden md:flex h-11 px-6 bg-white">
-            <Save className="w-4 h-4 mr-2" /> Save Progress
-          </Button>
-          <Button type="submit" className="w-full max-w-md h-12 text-lg font-black bg-primary hover:bg-primary/90 shadow-xl uppercase tracking-widest" disabled={isSubmitting}>
-            {isSubmitting ? "Submitting..." : (
-              <>
-                <Send className="w-4 h-4 mr-2" /> Submit Zonal Termly Report
-              </>
-            )}
-          </Button>
+          <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight">Zonal Termly Report: Schools Department</h1>
+          <p className="text-gray-500 font-medium">Termly progress reporting for the Schools Department.</p>
         </div>
-      </form>
+        <div className="bg-[#1b5e20] text-white px-6 py-4 rounded-2xl shadow-xl shadow-[#1b5e20]/20 flex items-center gap-6">
+           <div className="text-right">
+             <span className="text-[10px] uppercase font-bold tracking-widest opacity-60 block">Scope</span>
+             <span className="font-black italic flex items-center gap-1.5"><MapPin className="w-4 h-4 text-amber-400" />{zone}</span>
+           </div>
+           <div className="w-px h-8 bg-white/20"></div>
+           <div>
+             <span className="text-[10px] uppercase font-bold tracking-widest opacity-60 block">Timeline</span>
+             <span className="font-black flex items-center gap-1.5"><Calendar className="w-4 h-4 text-amber-400" />{period} {year}</span>
+           </div>
+        </div>
+      </div>
+
+      <Tabs defaultValue="general" className="w-full" onValueChange={setActiveTab}>
+        <TabsList className="grid grid-cols-2 md:grid-cols-5 w-full h-auto bg-gray-100/50 p-1 mb-8 rounded-xl backdrop-blur-sm">
+          <TabsTrigger value="general" className="py-3 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#1b5e20] font-bold text-xs uppercase tracking-wider">
+            <BookOpen className="w-4 h-4 mr-2 hidden md:block" /> General Stats
+          </TabsTrigger>
+          <TabsTrigger value="trainings" className="py-3 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#1b5e20] font-bold text-xs uppercase tracking-wider">
+            <GraduationCap className="w-4 h-4 mr-2 hidden md:block" /> Trainings
+          </TabsTrigger>
+          <TabsTrigger value="programmes" className="py-3 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#1b5e20] font-bold text-xs uppercase tracking-wider">
+            <Users className="w-4 h-4 mr-2 hidden md:block" /> Programmes
+          </TabsTrigger>
+          <TabsTrigger value="camps" className="py-3 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#1b5e20] font-bold text-xs uppercase tracking-wider">
+            <Tent className="w-4 h-4 mr-2 hidden md:block" /> Holiday Camps
+          </TabsTrigger>
+          <TabsTrigger value="final" className="py-3 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#1b5e20] font-bold text-xs uppercase tracking-wider">
+            <TrendingUp className="w-4 h-4 mr-2 hidden md:block" /> Final Sections
+          </TabsTrigger>
+        </TabsList>
+
+        {/* Tab 1: General Stats */}
+        <TabsContent value="general" className="animate-in fade-in-50 duration-500">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card className="border-none shadow-sm overflow-hidden h-full">
+              <div className="h-1.5 bg-[#1b5e20]"></div>
+              <CardHeader><CardTitle className={sectionLabel}>Missionary & Catchment Scope</CardTitle></CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className={statCardClass}>
+                    <label className={statLabelClass}>Full-Time Missionaries</label>
+                    <Input type="number" value={form.missionaries.fullTime || ""} onChange={e => {
+                      const val = parseInt(e.target.value) || 0;
+                      updateNested('missionaries', 'fullTime', val);
+                      updateNested('missionaries', 'total', val + form.missionaries.associate);
+                    }} className="h-12 text-2xl font-black border-none shadow-none p-0 focus:ring-0" />
+                  </div>
+                  <div className={statCardClass}>
+                    <label className={statLabelClass}>Associate Missionaries</label>
+                    <Input type="number" value={form.missionaries.associate || ""} onChange={e => {
+                        const val = parseInt(e.target.value) || 0;
+                        updateNested('missionaries', 'associate', val);
+                        updateNested('missionaries', 'total', val + form.missionaries.fullTime);
+                    }} className="h-12 text-2xl font-black border-none shadow-none p-0 focus:ring-0" />
+                  </div>
+                </div>
+                <div className="bg-[#1b5e20]/5 p-4 rounded-xl flex justify-between items-center">
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">Total Active Staff</span>
+                  <span className="text-3xl font-black text-[#1b5e20]">{form.missionaries.total}</span>
+                </div>
+                
+                <div className="space-y-4 pt-4">
+                   <Label className="text-[10px] font-black uppercase text-gray-400">Catchment Schools in Zone</Label>
+                   <div className="grid grid-cols-2 gap-3">
+                      <div className="p-3 bg-gray-50 rounded-lg">
+                        <Label className="text-[10px] text-gray-400">Secondary</Label>
+                        <Input type="number" value={form.catchment.secondary || ""} onChange={e => updateNested('catchment', 'secondary', parseInt(e.target.value) || 0)} className="h-8 border-none bg-transparent font-bold text-lg" />
+                      </div>
+                      <div className="p-3 bg-gray-50 rounded-lg">
+                        <Label className="text-[10px] text-gray-400">Primary</Label>
+                        <Input type="number" value={form.catchment.primary || ""} onChange={e => updateNested('catchment', 'primary', parseInt(e.target.value) || 0)} className="h-8 border-none bg-transparent font-bold text-lg" />
+                      </div>
+                   </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-none shadow-sm overflow-hidden h-full">
+               <div className="h-1.5 bg-amber-500"></div>
+               <CardHeader><CardTitle className={sectionLabel}>Schools Reached & Literature</CardTitle></CardHeader>
+               <CardContent className="space-y-6">
+                  <div className="space-y-4">
+                    <Label className="text-[10px] font-black uppercase text-gray-400">Schools Currently Reached</Label>
+                    <div className="grid grid-cols-2 gap-4">
+                       <div className={statCardClass}>
+                         <Label className={statLabelClass}>Secondary</Label>
+                         <Input type="number" value={form.schools.secondaryReached || ""} onChange={e => updateNested('schools', 'secondaryReached', parseInt(e.target.value) || 0)} className="h-10 text-xl font-bold border-none shadow-none p-0 focus:ring-0" />
+                       </div>
+                       <div className={statCardClass}>
+                          <Label className={statLabelClass}>Primary</Label>
+                          <Input type="number" value={form.schools.primaryReached || ""} onChange={e => updateNested('schools', 'primaryReached', parseInt(e.target.value) || 0)} className="h-10 text-xl font-bold border-none shadow-none p-0 focus:ring-0" />
+                       </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-4 space-y-4">
+                    <Label className="text-[10px] font-black uppercase text-gray-400">Literature Distribution Logs</Label>
+                    <div className="grid grid-cols-2 gap-4">
+                      {['guide', 'power', 'search', 'others'].map(lit => (
+                        <div key={lit} className="flex flex-col p-3 border rounded-xl bg-gray-50/50">
+                          <Label className="text-[10px] text-gray-400 capitalize mb-2">{lit === 'guide' ? 'Daily Guide' : lit === 'power' ? 'Daily Power' : lit === 'search' ? 'Search the Scripture' : 'Others'}</Label>
+                          <Input type="number" value={(form.literature as any)[lit] || ""} onChange={e => updateNested('literature', lit, parseInt(e.target.value) || 0)} className="h-8 border-none bg-transparent font-black text-lg" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+               </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        {/* Tab 2: Trainings */}
+        <TabsContent value="trainings" className="animate-in slide-in-from-right-4 duration-500">
+           <Card className="border-none shadow-sm overflow-hidden">
+             <div className="h-1.5 bg-blue-600"></div>
+             <CardHeader><CardTitle className={sectionLabel}>Departmental Training Modules</CardTitle></CardHeader>
+             <CardContent className="p-0">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-gray-100">
+                  {Object.entries({
+                    christianTeachers: "Christian Teacher's Seminar",
+                    schoolVisitors: "School Visitors Training",
+                    campOfficers: "Camp Officers Training",
+                    vocational: "Vocational Training"
+                  }).map(([key, label], idx) => (
+                    <div key={key} className={`p-6 space-y-4 border-b md:border-b-0 ${idx < 3 ? 'md:border-r' : ''} border-gray-100 hover:bg-blue-50/20 transition-colors`}>
+                       <Label className="text-[10px] font-black uppercase text-gray-400 tracking-wider h-8 block">{label}</Label>
+                       <div className="space-y-4">
+                          <div className="bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                             <Label className="text-[9px] font-black text-blue-600 uppercase mb-1 block">Mobilization Count</Label>
+                             <Input type="number" value={(form.trainings as any)[key].count || ""} onChange={e => {
+                               const newVal = { ...(form.trainings as any)[key], count: parseInt(e.target.value) || 0 };
+                               updateNested('trainings', key, newVal);
+                             }} className="h-10 text-2xl font-black border-none shadow-none p-0 focus:ring-0" />
+                          </div>
+                          <div className="space-y-1">
+                             <Label className="text-[9px] text-gray-400">Venue(s) of Training</Label>
+                             <Input value={(form.trainings as any)[key].venue} onChange={e => {
+                               const newVal = { ...(form.trainings as any)[key], venue: e.target.value };
+                               updateNested('trainings', key, newVal);
+                             }} className="h-9 text-xs border-gray-200" placeholder="Location..." />
+                          </div>
+                       </div>
+                    </div>
+                  ))}
+                </div>
+             </CardContent>
+           </Card>
+        </TabsContent>
+
+        {/* Tab 3: Programmes */}
+        <TabsContent value="programmes" className="animate-in slide-in-from-right-4 duration-500">
+           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {Object.entries({
+                schoolsRally: { label: "Schools Rally", color: "bg-purple-600" },
+                primaryRally: { label: "Primary Rally", color: "bg-green-600" },
+                schoolLeavers: { label: "School Leavers' Workshop", color: "bg-amber-600" },
+                valentine: { label: "Valentine's Day", color: "bg-red-600" }
+              }).map(([key, cfg]) => (
+                <Card key={key} className="border-none shadow-md overflow-hidden hover:scale-105 transition-transform duration-300">
+                  <div className={`h-1 ${cfg.color}`}></div>
+                  <CardHeader className="pb-2"><span className="text-[11px] font-black uppercase text-gray-400">{cfg.label}</span></CardHeader>
+                  <CardContent className="space-y-4">
+                     <div className="grid grid-cols-2 gap-2">
+                        <div className="p-3 bg-gray-50 rounded-xl text-center">
+                           <span className="text-[9px] font-bold text-gray-400 block mb-1">Attendance</span>
+                           <Input type="number" value={(form.programmes as any)[key].count || ""} onChange={e => {
+                             const newVal = { ...(form.programmes as any)[key], count: parseInt(e.target.value) || 0 };
+                             updateNested('programmes', key, newVal);
+                           }} className="h-8 text-center font-black border-none bg-transparent" />
+                        </div>
+                        <div className="p-3 bg-[#1b5e20]/5 rounded-xl text-center">
+                           <span className="text-[9px] font-bold text-[#1b5e20] block mb-1">Decision Cards</span>
+                           <Input type="number" value={(form.programmes as any)[key].converts || ""} onChange={e => {
+                             const newVal = { ...(form.programmes as any)[key], converts: parseInt(e.target.value) || 0 };
+                             updateNested('programmes', key, newVal);
+                           }} className="h-8 text-center font-black border-none bg-transparent text-[#1b5e20]" />
+                        </div>
+                     </div>
+                  </CardContent>
+                </Card>
+              ))}
+           </div>
+        </TabsContent>
+
+        {/* Tab 4: Holiday Camps */}
+        <TabsContent value="camps" className="animate-in slide-in-from-right-4 duration-500">
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {['studentHoliday', 'childrenHoliday'].map(c => (
+                <Card key={c} className="border-none shadow-sm overflow-hidden bg-white">
+                  <div className={`h-1.5 ${c === 'studentHoliday' ? 'bg-orange-500' : 'bg-cyan-500'}`}></div>
+                  <CardHeader><CardTitle className={sectionLabel}>{c === 'studentHoliday' ? 'Students Holiday Camp' : 'Children Holiday Camp'}</CardTitle></CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="grid grid-cols-2 gap-4">
+                       <div className={statCardClass}>
+                          <label className={statLabelClass}>{c === 'studentHoliday' ? 'Total Students' : 'Total Children'}</label>
+                          <Input type="number" value={(form.camps as any)[c].count || ""} onChange={e => {
+                            const newVal = { ...(form.camps as any)[c], count: parseInt(e.target.value) || 0 };
+                            updateNested('camps', c, newVal);
+                          }} className="h-10 text-xl font-bold border-none shadow-none p-0 focus:ring-0" />
+                       </div>
+                       <div className={statCardClass}>
+                          <label className={statLabelClass}>Converts</label>
+                          <Input type="number" value={(form.camps as any)[c].converts || ""} onChange={e => {
+                             const newVal = { ...(form.camps as any)[c], converts: parseInt(e.target.value) || 0 };
+                             updateNested('camps', c, newVal);
+                          }} className="h-10 text-xl font-bold border-none shadow-none p-0 focus:ring-0" />
+                       </div>
+                    </div>
+                    <div className="space-y-2">
+                       <Label className="text-[10px] font-bold text-gray-400 uppercase">Camp Venue / Location</Label>
+                       <Input value={(form.camps as any)[c].venue} onChange={e => {
+                          const newVal = { ...(form.camps as any)[c], venue: e.target.value };
+                          updateNested('camps', c, newVal);
+                       }} className="h-12 bg-white border-gray-100 font-medium" placeholder="Location where camp was held..." />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+           </div>
+        </TabsContent>
+
+        {/* Tab 5: Final Narrative */}
+        <TabsContent value="final" className="animate-in slide-in-from-right-4 duration-500 space-y-8">
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card className="border-none shadow-sm">
+                <CardHeader><CardTitle className={sectionLabel}><MessageSquare className="w-4 h-4" /> V. Plans & VI. Budget</CardTitle></CardHeader>
+                <CardContent className="space-y-4">
+                  <Textarea value={form.plans} onChange={e => setForm({...form, plans: e.target.value})} className="min-h-[150px] border-gray-100 bg-white" placeholder="Next term plans..." />
+                  <div className="space-y-1">
+                    <Label className="text-[10px] font-black uppercase text-gray-400">Projected Budget Total (₦)</Label>
+                    <Input type="number" value={form.budget || ""} onChange={e => setForm({...form, budget: parseFloat(e.target.value) || 0})} className="h-11 border-gray-100" placeholder="0.00" />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-none shadow-sm">
+                <CardHeader><CardTitle className={sectionLabel}><Users className="w-4 h-4" /> VII. Recommendation</CardTitle></CardHeader>
+                <CardContent>
+                  <Textarea value={form.recommendations} onChange={e => setForm({...form, recommendations: e.target.value})} className="min-h-[200px] border-gray-100 bg-white" placeholder="Your recommendations..." />
+                </CardContent>
+              </Card>
+           </div>
+        </TabsContent>
+      </Tabs>
+
+      {/* Persistent Action Bar */}
+      <div className="fixed bottom-0 left-0 lg:left-64 right-0 p-6 bg-white/90 backdrop-blur-md border-t border-gray-100 shadow-2xl flex justify-center z-[100]">
+        <Button 
+          onClick={onSubmit} 
+          disabled={isSubmitting} 
+          className="w-full max-w-xl h-14 text-lg font-black bg-[#1b5e20] hover:bg-[#2e7d32] shadow-xl shadow-[#1b5e20]/20 rounded-2xl uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95"
+        >
+          {isSubmitting ? "Syncing Record..." : <><Send className="mr-3" /> Submit Zonal Termly Report</>}
+        </Button>
+      </div>
     </div>
   );
 }
 
-export default function SchoolsTermlyReportPage() {
+export default function TermlyReportPage() {
   return (
-    <Suspense fallback={<div className="flex-1 p-6">Loading report form...</div>}>
-      <SchoolsTermlyReportContent />
+    <Suspense fallback={<div className="flex-1 flex items-center justify-center p-20 text-[#1b5e20]"><RefreshCw className="w-10 h-10 animate-spin" /></div>}>
+      <TermlyReportContent />
     </Suspense>
   );
 }

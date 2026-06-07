@@ -1,19 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Tent, Bird, Flame, Palette, Rocket, Info, Loader2 } from "lucide-react";
+import { Tent, Bird, Flame, Palette, Info, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { fetchDeptStats } from "@/lib/stats";
-import { useRouter } from "next/navigation";
 
 export default function CampingReportPage() {
   const [statsData, setStatsData] = useState({ count: 0, impact: 0 });
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     const load = async () => {
-      const data = await fetchDeptStats("Missionary Report"); // Proxy for impact
+      const data = await fetchDeptStats("Missionary Report");
       setStatsData(data);
       setLoading(false);
     };
@@ -26,7 +24,7 @@ export default function CampingReportPage() {
       title: "Student Leadership Training Camp",
       dept: "Student & Youth",
       focus: "Executive training and spiritual development for school leaders.",
-      link: "/initialize-report?type=leadership-training",
+      link: "/initialize-report?type=leadership-training-report",
     },
     {
       icon: <Bird className="text-[#1b5e20]" size={24} />,
@@ -40,7 +38,7 @@ export default function CampingReportPage() {
       title: "Student Long Vacation Camp",
       dept: "Student & Youth",
       focus: "Major annual outreach and discipleship for secondary students.",
-      link: "/initialize-report?type=schools-termly",
+      link: "/initialize-report?type=student-camp",
     },
     {
       icon: <Palette className="text-[#1b5e20]" size={24} />,
@@ -48,14 +46,6 @@ export default function CampingReportPage() {
       dept: "Children",
       focus: "Foundational spiritual training for primary-aged children.",
       link: "/initialize-report?type=children-camp",
-    },
-    {
-      icon: <Rocket className="text-white" size={24} />,
-      title: "Youth Empowerment Summit Camp",
-      dept: "Student & Youth",
-      focus: "Skills acquisition, empowerment, and leadership for youth.",
-      link: "/initialize-report?type=youth-summit",
-      highlight: true,
     },
   ];
 
@@ -80,23 +70,23 @@ export default function CampingReportPage() {
       <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 flex gap-4 items-start">
         <Info className="text-blue-500 shrink-0 mt-0.5" size={20} />
         <p className="text-sm text-gray-700 leading-relaxed font-medium">
-          <strong>System Note:</strong> Camping reports are integrated with their respective departments. Clicking "Go to Form" will route you to the departmental reporting unit.
+          <strong>System Note:</strong> Camping reports are integrated with their respective departments. Clicking "Go to Form" will route you to the departmental reporting unit to ensure data consistency.
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {reports.map((report, i) => (
-          <div key={i} className={`p-5 md:p-6 rounded-lg shadow-sm border transition-shadow relative overflow-hidden group flex flex-col h-full ${report.highlight ? 'bg-[#1b5e20] text-white border-[#1b5e20]' : 'bg-white text-gray-900 border-gray-100 hover:shadow-md'}`}>
-            <div className={`mb-3 md:mb-4 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center border shrink-0 ${report.highlight ? 'bg-white/10 border-white/20' : 'bg-[#fffdf7] border-gray-100'}`}>
+          <div key={i} className="p-5 md:p-6 rounded-lg shadow-sm border transition-shadow relative overflow-hidden group flex flex-col h-full bg-white text-gray-900 border-gray-100 hover:shadow-md">
+            <div className="mb-3 md:mb-4 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center border shrink-0 bg-[#fffdf7] border-gray-100">
               {report.icon}
             </div>
-            <h4 className={`font-bold mb-1 text-sm md:text-base leading-snug ${report.highlight ? 'text-white' : 'text-gray-900'}`}>{report.title}</h4>
-            <div className={`text-[10px] font-bold uppercase tracking-widest mb-3 ${report.highlight ? 'text-white/70' : 'text-gray-400'}`}>
-              Dept: <span className={report.highlight ? 'text-[#ffca28]' : 'text-[#1b5e20]'}>{report.dept}</span>
+            <h4 className="font-bold mb-1 text-sm md:text-base leading-snug text-gray-900">{report.title}</h4>
+            <div className="text-[10px] font-bold uppercase tracking-widest mb-3 text-gray-400">
+              Department: <span className="text-[#1b5e20]">{report.dept}</span>
             </div>
-            <p className={`text-xs md:text-sm mb-4 md:mb-6 flex-grow ${report.highlight ? 'text-gray-200' : 'text-gray-600'}`}>{report.focus}</p>
-            <Link href={report.link} className={`w-full py-2 border-2 font-bold rounded transition-colors text-xs md:text-sm text-center ${report.highlight ? 'border-[#ffca28] bg-[#ffca28] text-[#1b5e20] hover:bg-white hover:border-white' : 'border-[#1b5e20] text-[#1b5e20] hover:bg-[#1b5e20] hover:text-white'}`}>
-              Go to {report.dept.split(' ')[0]} Form
+            <p className="text-xs md:text-sm mb-4 md:mb-6 flex-grow text-gray-600">Focus: {report.focus}</p>
+            <Link href={report.link} className="w-full py-2 border-2 font-bold rounded transition-colors text-xs md:text-sm text-center border-[#1b5e20] text-[#1b5e20] hover:bg-[#1b5e20] hover:text-white">
+              Go to {report.dept.split(' ')[0]} Dept Form
             </Link>
           </div>
         ))}

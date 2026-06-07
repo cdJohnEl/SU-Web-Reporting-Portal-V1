@@ -70,31 +70,13 @@ export function SidebarContent() {
           </div>
           <div className="space-y-1">
             <Link href="/schools-youth" className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${pathname === '/schools-youth' ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground'}`}>
-              <Users className="w-4 h-4" /> Schools & Youth
+              <Users className="w-4 h-4" /> Schools & Youth Report
             </Link>
-            {/* Sub-links for Schools & Youth */}
-            <div className="pl-9 space-y-1">
-              <Link href="/initialize-report?type=aids-for-life" className="block text-[11px] font-medium text-muted-foreground hover:text-[#1b5e20] transition-colors py-1 italic">
-                - Aids for Life Week
-              </Link>
-              <Link href="/initialize-report?type=leadership-training" className="block text-[11px] font-medium text-muted-foreground hover:text-[#1b5e20] transition-colors py-1 italic">
-                - Leadership Training
-              </Link>
-              <Link href="/initialize-report?type=valentine-program" className="block text-[11px] font-medium text-muted-foreground hover:text-[#1b5e20] transition-colors py-1 italic">
-                - Valentine Outreach
-              </Link>
-              <Link href="/initialize-report?type=student-rally" className="block text-[11px] font-medium text-muted-foreground hover:text-[#1b5e20] transition-colors py-1 italic">
-                - Student Rally Stats
-              </Link>
-            </div>
             <Link href="/children-report" className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${pathname === '/children-report' ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground'}`}>
-              <BookOpen className="w-4 h-4" /> Children
+              <BookOpen className="w-4 h-4" /> Children Report
             </Link>
             <Link href="/pilgrims-report" className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${pathname === '/pilgrims-report' ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground'}`}>
               <MapPin className="w-4 h-4" /> Pilgrims' Report
-            </Link>
-            <Link href="/camping-report" className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${pathname === '/camping-report' ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground'}`}>
-              <Tent className="w-4 h-4" /> Camping Report
             </Link>
           </div>
         </div>
@@ -104,20 +86,23 @@ export function SidebarContent() {
             Operational
           </div>
           <div className="space-y-1">
+            <Link href="/camping-report" className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${pathname === '/camping-report' ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground'}`}>
+              <Tent className="w-4 h-4" /> Camping Report
+            </Link>
             <Link href="/missionary-report" className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${pathname === '/missionary-report' ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground'}`}>
               <Activity className="w-4 h-4" /> Missionary Report
             </Link>
-            <Link href="/initialize-report?type=zonal" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md border-l-2 border-transparent hover:bg-sidebar-accent text-sidebar-foreground hover:text-sidebar-accent-foreground hover:border-[#1b5e20]/30 transition-all">
-              <Folder className="w-4 h-4" /> Zonal Progress
+            <Link href="/initialize-report?type=schools-termly" className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${pathname.includes('schools-termly') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground'}`}>
+              <Folder className="w-4 h-4" /> Termly Report
             </Link>
-            <Link href="/initialize-report?type=schools-termly" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md border-l-2 border-transparent hover:bg-sidebar-accent text-sidebar-foreground hover:text-sidebar-accent-foreground hover:border-[#1b5e20]/30 transition-all">
-              <Folder className="w-4 h-4" /> Termly Schools
+            <Link href="/initialize-report?type=tour" className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${pathname.includes('tour-report') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground'}`}>
+              <Folder className="w-4 h-4" /> Tour Report
             </Link>
-            <Link href="/initialize-report?type=tour" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md border-l-2 border-transparent hover:bg-sidebar-accent text-sidebar-foreground hover:text-sidebar-accent-foreground hover:border-[#1b5e20]/30 transition-all">
-              <Folder className="w-4 h-4" /> Zonal Tour Report
-            </Link>
-            <Link href="/initialize-report?type=trainings-meetings" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md border-l-2 border-transparent hover:bg-sidebar-accent text-sidebar-foreground hover:text-sidebar-accent-foreground hover:border-[#1b5e20]/30 transition-all">
+            <Link href="/initialize-report?type=trainings-meetings" className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${pathname.includes('trainings-meetings') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground'}`}>
               <Folder className="w-4 h-4" /> Trainings & Meetings
+            </Link>
+            <Link href="/initialize-report?type=zonal" className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${pathname.includes('zonal-report') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground'}`}>
+              <Folder className="w-4 h-4" /> Zonal Report
             </Link>
           </div>
         </div>

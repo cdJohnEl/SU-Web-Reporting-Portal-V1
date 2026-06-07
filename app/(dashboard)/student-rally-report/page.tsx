@@ -6,15 +6,14 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Send, MapPin, Calendar, Users, Heart, Award, Wallet } from "lucide-react";
+import { Send, MapPin, Calendar, Heart } from "lucide-react";
 import { db, auth } from "@/lib/firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
 function StudentRallyContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  
-  // Metadata
+
   const zone = searchParams.get("zone") || "Not Specified";
   const year = searchParams.get("year") || new Date().getFullYear().toString();
   const period = searchParams.get("period") || "Not Specified";
@@ -24,7 +23,7 @@ function StudentRallyContent() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!auth.currentUser) return alert("Session expired. Please log in again.");
-    
+
     setIsSubmitting(true);
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
@@ -52,7 +51,7 @@ function StudentRallyContent() {
     }
   };
 
-  const sectionHeaderClass = "text-lg font-bold text-su-green flex items-center gap-2 mb-4 uppercase tracking-tight";
+  const sectionHeaderClass = "text-lg font-bold text-[#1b5e20] flex items-center gap-2 mb-4 uppercase tracking-tight";
 
   return (
     <div className="flex-1 p-4 md:p-6 space-y-6 max-w-5xl mx-auto pb-24">
@@ -74,47 +73,59 @@ function StudentRallyContent() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        
-        {/* Rally Execution */}
+
+        {/* Zone Context */}
         <Card className="border-none shadow-sm bg-white overflow-hidden">
           <div className="h-1 bg-[#1b5e20]"></div>
           <CardHeader className="pb-2">
-            <h3 className={sectionHeaderClass}><Calendar className="w-5 h-5" /> Rally Execution Details</h3>
+            <h3 className={sectionHeaderClass}><MapPin className="w-5 h-5" /> Context</h3>
           </CardHeader>
           <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label className="text-gray-600 font-bold">Date / Duration</Label>
-              <Input name="rallyDate" type="text" placeholder="e.g., Saturday, 20th Oct" required className="h-11 border-gray-100 focus:ring-[#1b5e20]" />
-            </div>
-            <div className="space-y-2">
-              <Label className="text-gray-600 font-bold">Venue(s) of Rally</Label>
-              <Input name="rallyVenue" type="text" placeholder="Type venue location..." required className="h-11 border-gray-100 focus:ring-[#1b5e20]" />
-            </div>
-            <div className="space-y-2 bg-[#f1f8f1] p-4 rounded-lg border border-[#e2efe2]">
-              <Label className="text-gray-600 font-bold">Total Student Attendance</Label>
-              <Input name="studentAttendance" type="number" placeholder="0" required className="h-11 border-white shadow-sm focus:ring-[#1b5e20]" />
-            </div>
-            <div className="space-y-2 bg-[#f1f8f1] p-4 rounded-lg border border-[#e2efe2]">
-              <Label className="text-[#1b5e20] font-bold flex items-center gap-2"><Heart className="w-4 h-4" /> Number of Converts</Label>
-              <Input name="converts" type="number" placeholder="0" required className="h-11 border-white shadow-sm focus:ring-[#1b5e20]" />
+              <Label className="text-gray-600 font-bold">Zone Context</Label>
+              <Input value={zone} readOnly className="h-11 border-gray-100 bg-muted cursor-not-allowed font-medium" />
             </div>
           </CardContent>
         </Card>
 
-        {/* Resources & Finance */}
+        {/* Rally Execution */}
         <Card className="border-none shadow-sm bg-white overflow-hidden">
           <div className="h-1 bg-amber-500"></div>
           <CardHeader className="pb-2">
-            <h3 className={sectionHeaderClass}><Award className="w-5 h-5" /> Resources & Financial Impact</h3>
+            <h3 className={sectionHeaderClass}><Calendar className="w-5 h-5 text-amber-500" /> Rally Execution</h3>
           </CardHeader>
-          <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label className="text-gray-600 font-bold">Resource Persons / Speakers</Label>
-              <Input name="resourcePersons" type="text" placeholder="e.g. Bro John, Sis Mary" required className="h-11 border-gray-100" />
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label className="text-gray-600 font-bold">Date / Duration</Label>
+                <Input name="rallyDate" type="text" required className="h-11 border-gray-100 focus:ring-[#1b5e20]" />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-gray-600 font-bold">Venue(s)</Label>
+                <Input name="rallyVenue" type="text" required className="h-11 border-gray-100 focus:ring-[#1b5e20]" />
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label className="text-gray-600 font-bold">Cost Incurred (₦)</Label>
-              <Input name="cost" type="number" step="0.01" placeholder="0.00" required className="h-11 border-gray-100" />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-[#f1f8f1] p-4 rounded-lg border border-[#e2efe2]">
+              <div className="space-y-2">
+                <Label className="text-gray-600 font-bold">Total Student Attendance</Label>
+                <Input name="studentAttendance" type="number" required className="h-11 border-white shadow-sm focus:ring-[#1b5e20]" />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-[#1b5e20] font-bold flex items-center gap-2"><Heart className="w-4 h-4" /> Number of Converts</Label>
+                <Input name="converts" type="number" required className="h-11 border-white shadow-sm focus:ring-[#1b5e20]" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label className="text-gray-600 font-bold">Resource Persons</Label>
+                <Input name="resourcePersons" type="text" required className="h-11 border-gray-100" />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-gray-600 font-bold">Cost Incurred (₦)</Label>
+                <Input name="cost" type="number" required className="h-11 border-gray-100" />
+              </div>
             </div>
           </CardContent>
         </Card>

@@ -23,7 +23,7 @@ export default function LoginPage() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push("/dashboard");
+      router.push("/verify-login");
     } catch (err: any) {
       setError("Invalid email or password. Please try again.");
     } finally {
